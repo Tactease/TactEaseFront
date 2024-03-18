@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderStyle } from "./Header.style";
+import { HeaderStyle } from "./Header.style.js";
 import Logo from "../../assets/logo.png";
 
 
