@@ -6,18 +6,19 @@ export const UserInfoContainer = styled.div`
     width: 30vw;
     gap: 3%;
     justify-content: flex-end;
+    margin-top: 0.5%;
 `;
 
 export const UserImg = styled.img`
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     display: block;
     border-radius: 50%;
     background-color: #0E3B77;
 `;
 
 export const UserInfomation = styled.div`
-    font-size: 20px;
+    font-size: 15px;
     color: #0E3B77;
     
     &:first-child {
