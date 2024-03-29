@@ -1,0 +1,60 @@
+.calendar_default_event_inner {
+    background: #2e78d6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 10pt;
+    padding: 5px;
+    opacity: 0.8;
+}
+
+.calendar_default_main{
+    border: none;
+    overflow: hidden;
+}
+
+.calendar_default_rowheader_inner, .calendar_default_cornerright_inner, .calendar_default_corner_inner, .calendar_default_colheader_inner, .calendar_default_alldayheader_inner{
+    background: #ffffff;
+}
+
+.calendar_default_colheader_inner{
+    /*height: 5vh;*/
+}
+
+.daypilot_mainheader {
+    background-color: #ffffff;
+    /*border-bottom: 1px solid #ddd;*/
+}
+
+.daypilot_cell {
+    border-right: 1px solid #ddd;
+}
+
+.daypilot_event {
+    border: 1px solid #999;
+}
+
+.daypilot_event_inner {
+    color: #fff;
+    font-size: 14px;
+}
+
+.calendar_default_main *, .calendar_default_main ::before, .calendar_default_main ::after {
+    box-sizing: content-box;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+}
+
+.wrap {
+    display: flex;
+    width:80%;
+    margin:auto;
+}
+
+.calendar_default_main::-webkit-scrollbar {
+    display: none;
+}
+
+.left { marginRight: 10px; }
+
+main{ flexGrow:1; }
