@@ -68,3 +68,37 @@
 .left { marginRight: 10px; }
 
 main{ flexGrow:1; }
+
+
+.modal_default_main {
+    background-color: #f0f0f0; /* Change the background color */
+    border-radius: 10px; /* Add border radius */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.modal_default_main input[type="text"], .modal_default_main input[type="datetime-local"], .modal_default_main input[type="number"] {
+    border: none; /* Remove border from input fields */
+    border-bottom: 1px solid #ddd; /* Add border bottom to input fields */
+    margin-bottom: 10px; /* Add margin bottom to input fields */
+}
+
+.modal_default_main select {
+    border: none; /* Remove border from select fields */
+    border-bottom: 1px solid #ddd; /* Add border bottom to select fields */
+    margin-bottom: 10px; /* Add margin bottom to select fields */
+}
+
+.modal_default_main button {
+    background-color: rgba(23, 32, 81, 0.66); /* Change the background color of buttons */
+    border: none; /* Remove border from buttons */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 800;
+    width: 5vw;
+    font-size: 20px;
+}

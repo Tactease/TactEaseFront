@@ -60,14 +60,28 @@ const Calendar = () => {
         timeRangeSelectedHandling: "Enabled",
         onTimeRangeSelected: async args => {
             const dp = calendarRef.current.control;
-            const modal = await DayPilot.Modal.prompt("Create a new event:", "Event 1");
+            const form = [{
+                name:"Mission Type",
+                id:"missionType",
+                options: [
+                    {name:"Mission", value:"MISSION"},
+                    {name:"Patrol by car", value:"PATROL_BY_CAR"},
+                    {name:"Watch", value:"WATCH"},
+                    {name:"Guard", value:"GUARD"}
+                ]},
+                // {name:"Start Date", id:"startDate", value: args.start.value.toString()},
+                // {name:"End Date", id:"endDate", value: args.end.value.toString()},
+                {name:"Soldier Count", id:"soldierCount", type: "number"}];
+            const modal = await DayPilot.Modal.form(form);
             dp.clearSelection();
             if (!modal.result) { return; }
+            console.log(modal.result);
             dp.events.add({
                 start: args.start,
                 end: args.end,
                 id: DayPilot.guid(),
-                text: modal.result
+                text: `${formatMissionType(modal.result.missionType)}`,
+                backColor: '#58B7D4',
             });
         },
         onEventClick: async args => {
