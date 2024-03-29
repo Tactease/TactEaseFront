@@ -1,10 +1,11 @@
 .calendar_default_event_inner {
-    background: #2e78d6;
     color: #fff;
     border: none;
-    border-radius: 5px;
-    font-size: 10pt;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 800;
     padding: 5px;
+    justify-content: center;
     opacity: 0.8;
 }
 
@@ -49,6 +50,10 @@
     display: flex;
     width:80%;
     margin:auto;
+}
+
+.calendar_default_cell_inner{
+    background: #fff;
 }
 
 .calendar_default_main::-webkit-scrollbar {

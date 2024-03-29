@@ -12,6 +12,36 @@ const convertToISO = (dateStr) => {
     return `${year}-${month}-${day}T${hours}:${minutes}:00`;
 };
 
+const getMissionColor = (missionType) => {
+    switch (missionType) {
+        case 'MISSION':
+            return '#58B7D4';
+        case 'PATROL_BY_CAR':
+            return '#B2A6FF';
+        case 'WATCH':
+            return '#7761F9';
+        case 'GUARD':
+            return '#87D1A0';
+        default:
+            return '#C000D0';
+    }
+};
+
+const formatMissionType = (missionType) => {
+    switch (missionType) {
+        case 'MISSION':
+            return 'Mission';
+        case 'PATROL_BY_CAR':
+            return 'Patrol by car';
+        case 'WATCH':
+            return 'Watch';
+        case 'GUARD':
+            return 'Guard';
+        default:
+            return missionType;
+    }
+};
+
 const Calendar = () => {
     const calendarRef = useRef()
 
@@ -63,60 +93,60 @@ const Calendar = () => {
                 }
             ]
         }),
-        onBeforeEventRender: args => {
-            args.data.areas = [
-                {
-                    top: 3,
-                    right: 3,
-                    width: 20,
-                    height: 20,
-                    symbol: "icons/daypilot.svg#minichevron-down-2",
-                    fontColor: "#fff",
-                    toolTip: "Show context menu",
-                    action: "ContextMenu",
-                },
-                {
-                    top: 3,
-                    right: 25,
-                    width: 20,
-                    height: 20,
-                    symbol: "icons/daypilot.svg#x-circle",
-                    fontColor: "#fff",
-                    action: "None",
-                    toolTip: "Delete event",
-                    onClick: async args => {
-                        const dp = calendarRef.current.control;
-                        dp.events.remove(args.source);
-                    }
-                }
-            ];
-
-
-            // const participants = args.data.participants;
-            // if (participants > 0) {
-            //     // show one icon for each participant
-            //     for (let i = 0; i < participants; i++) {
-            //         args.data.areas.push({
-            //             bottom: 5,
-            //             right: 5 + i * 30,
-            //             width: 24,
-            //             height: 24,
-            //             action: "None",
-            //             image: `https://picsum.photos/24/24?random=${i}`,
-            //             style: "border-radius: 50%; border: 2px solid #fff; overflow: hidden;",
-            //         });
-            //     }
-            // }
-        }
+        // onBeforeEventRender: args => {
+        //     args.data.areas = [
+        //         {
+        //             top: 3,
+        //             right: 3,
+        //             width: 20,
+        //             height: 20,
+        //             symbol: "icons/daypilot.svg#minichevron-down-2",
+        //             fontColor: "#fff",
+        //             toolTip: "Show context menu",
+        //             action: "ContextMenu",
+        //         },
+        //         {
+        //             top: 3,
+        //             right: 25,
+        //             width: 20,
+        //             height: 20,
+        //             symbol: "icons/daypilot.svg#x-circle",
+        //             fontColor: "#fff",
+        //             action: "None",
+        //             toolTip: "Delete event",
+        //             onClick: async args => {
+        //                 const dp = calendarRef.current.control;
+        //                 dp.events.remove(args.source);
+        //             }
+        //         }
+        //     ];
+        //
+        //
+        //     // const participants = args.data.participants;
+        //     // if (participants > 0) {
+        //     //     // show one icon for each participant
+        //     //     for (let i = 0; i < participants; i++) {
+        //     //         args.data.areas.push({
+        //     //             bottom: 5,
+        //     //             right: 5 + i * 30,
+        //     //             width: 24,
+        //     //             height: 24,
+        //     //             action: "None",
+        //     //             image: `https://picsum.photos/24/24?random=${i}`,
+        //     //             style: "border-radius: 50%; border: 2px solid #fff; overflow: hidden;",
+        //     //         });
+        //     //     }
+        //     // }
+        // }
     });
 
     useEffect(() => {
         const events = missionsData.map((mission) => ({
             id: mission.missionId,
-            text: mission.missionType,
+            text: `${formatMissionType(mission.missionType)}\n${mission.startDate.split(' ')[1]} - ${mission.endDate.split(' ')[1]}`,
             start: convertToISO(mission.startDate),
             end: convertToISO(mission.endDate),
-            backColor: "#6aa84f",
+            backColor: getMissionColor(mission.missionType),
             participants: mission.soldierCount,
         }));
 
@@ -124,6 +154,7 @@ const Calendar = () => {
 
         calendarRef.current.control.update({startDate, events});
     }, []);
+
 
     return (
         <div className="wrap">
