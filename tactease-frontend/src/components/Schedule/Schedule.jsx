@@ -153,6 +153,13 @@ const Calendar = () => {
         const startDate = "2024-02-12";
 
         calendarRef.current.control.update({startDate, events});
+
+        const cells = document.querySelectorAll('.calendar_default_cell_inner');
+        cells.forEach((cell, index) => {
+            if (index % 2 === 0) {
+                cell.classList.add('no-border');
+            }
+        });
     }, []);
 
 
