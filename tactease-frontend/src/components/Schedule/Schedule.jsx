@@ -3,7 +3,7 @@ import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 import "./schedule.style.css"
 // import missionsData from '../../demo-data/missions.json';
 import { convertToISO, formatTime, getMissionColor, formatMissionType, formatDate } from '../Mission/Mission.jsx';
-import { getMissions } from '../../API/missions.api.js';
+import { getMissions, createMission, deleteMission, updateMission } from '../../API/missions.api.js';
 import { getSoldiers, getSoldierById } from "../../API/soldiers.api.js";
 
 
@@ -20,8 +20,7 @@ const Calendar = () => {
             e.data.soldiersOnMission.forEach((personalNumber) => {
                 for(let i = 0; i < soldiersData.data.length; i++) {
                     if (soldiersData.data[i].personalNumber.toString() === personalNumber.toString()) {
-                        console.log("soldier data",soldiersData.data[i])
-                        missionInfo += `<p class="mission-info">${soldiersData.data[i].fullName} ${soldiersData.data[i].pakal}</p>`;
+                        missionInfo += `<p class="mission-info">${soldiersData.data[i].fullName} ${soldiersData.data[i].personalNumber} ${soldiersData.data[i].pakal}</p>`;
                     }
                 }
             });
@@ -81,6 +80,19 @@ const Calendar = () => {
             const modal = await DayPilot.Modal.form(form);
             dp.clearSelection();
             if (!modal.result) { return; }
+            const newMission = {
+                classId: 40,
+                missionType: modal.result.missionType,
+                soldierCount: modal.result.soldierCount,
+                startDate: args.start.value.toString(),
+                endDate: args.end.value.toString(),
+                soldiersOnMission: []
+            };
+            console.log("new mission", newMission);
+
+            createMission(newMission).then((res => {
+                console.log("new mission created", res);
+            }));
             dp.events.add({
                 start: args.start,
                 end: args.end,
@@ -102,6 +114,12 @@ const Calendar = () => {
                     onClick: async args => {
                         const dp = calendarRef.current.control;
                         dp.events.remove(args.source);
+                       await deleteMission(args.source.data.id.toString())
+                            .then((res => {
+                            console.log("mission deleted", res);
+                        }).catch((err) => {
+                            console.log("mission not deleted", err);
+                        }));
                     },
                 },
                 {
