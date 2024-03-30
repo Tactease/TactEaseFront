@@ -1,0 +1,113 @@
+.calendar_default_event_inner {
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 800;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    opacity: 0.8;
+}
+
+.calendar_default_main{
+    border: none;
+    overflow: hidden;
+}
+
+.calendar_default_rowheader_inner, .calendar_default_cornerright_inner, .calendar_default_corner_inner, .calendar_default_colheader_inner, .calendar_default_alldayheader_inner{
+    background: #ffffff;
+}
+
+.calendar_default_colheader_inner{
+    /*height: 5vh;*/
+}
+
+.daypilot_mainheader {
+    background-color: #ffffff;
+    /*border-bottom: 1px solid #ddd;*/
+}
+
+.daypilot_cell {
+    border-right: 1px solid #ddd;
+}
+
+.daypilot_event {
+    border: 1px solid #999;
+}
+
+.daypilot_event_inner {
+    color: #fff;
+    font-size: 14px;
+}
+
+.calendar_default_main *, .calendar_default_main ::before, .calendar_default_main ::after {
+    box-sizing: content-box;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+}
+
+.wrap {
+    display: flex;
+    width:80%;
+    margin:auto;
+}
+
+.calendar_default_cell_inner{
+    background: #fff;
+}
+
+.no-border {
+    border-bottom: none;
+}
+
+.calendar_default_main::-webkit-scrollbar {
+    display: none;
+}
+
+.left { marginRight: 10px; }
+
+main{ flexGrow:1; }
+
+
+.modal_default_main {
+    background-color: #f0f0f0; /* Change the background color */
+    border-radius: 10px; /* Add border radius */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    position: absolute;
+    top: 25%;
+    left: 50%;
+}
+
+.modal_default_main input[type="select"], .modal_default_main input[type="number"] {
+    border: none; /* Remove border from input fields */
+    border-bottom: 1px solid #ddd; /* Add border bottom to input fields */
+    margin-bottom: 10px; /* Add margin bottom to input fields */
+}
+
+
+.modal_default_main select {
+    border: none; /* Remove border from select fields */
+    border-bottom: 1px solid #ddd; /* Add border bottom to select fields */
+    margin-bottom: 10px; /* Add margin bottom to select fields */
+}
+
+.modal_default_main button {
+    background-color: rgba(23, 32, 81, 0.66); /* Change the background color of buttons */
+    border: none; /* Remove border from buttons */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 800;
+    width: fit-content;
+    font-size: 20px;
+}
+
+.modal_default_main{
+    border: 10px solid #fff;
+    display: flex;
+    justify-content: center;
+}
+
+
