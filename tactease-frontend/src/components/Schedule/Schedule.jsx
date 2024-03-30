@@ -10,6 +10,7 @@ const Calendar = () => {
 
     const reviewEvent = async (e) => {
         let missionInfo = `
+        <h1>${formatMissionType(e.data.missionType)}</h1>
         <p class="mission-info">Date: ${e.data.start.toString().split('T')[0]}</p>
         <p class="mission-info">Hours: ${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}</p>
         <p class="mission-info">Participants:</p>`;
@@ -41,7 +42,7 @@ const Calendar = () => {
             }];
         const modal = await DayPilot.Modal.form(form, e.data);
         if (!modal.result) { return; }
-        e.data.soldierCount = modal.result.soldierCount,
+            e.data.soldierCount = modal.result.soldierCount,
             e.data.missionType = modal.result.missionType,
             e.data.text = `${formatMissionType(modal.result.missionType)}\n${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}`,
             e.data.backColor = getMissionColor(modal.result.missionType),
@@ -111,6 +112,7 @@ const Calendar = () => {
         const events = missionsData.map((mission) => ({
             id: mission.missionId,
             text: `${formatMissionType(mission.missionType)}\n${mission.startDate.split(' ')[1]} - ${mission.endDate.split(' ')[1]}`,
+            missionType: mission.missionType,
             start: convertToISO(mission.startDate),
             end: convertToISO(mission.endDate),
             backColor: getMissionColor(mission.missionType),
