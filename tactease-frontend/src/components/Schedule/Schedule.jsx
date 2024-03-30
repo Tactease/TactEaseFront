@@ -68,6 +68,7 @@ const Calendar = () => {
                 missionType: modal.result.missionType,
                 text: `${formatMissionType(modal.result.missionType)}\n${formatTime(args.start.toString())} - ${formatTime(args.end.toString())}`,
                 backColor: getMissionColor(modal.result.missionType),
+                soldiersOnMission: []
             });
         },
         onEventClick: async args => {
@@ -93,51 +94,6 @@ const Calendar = () => {
                 }
             ]
         }),
-        // onBeforeEventRender: args => {
-        //     args.data.areas = [
-        //         {
-        //             top: 3,
-        //             right: 3,
-        //             width: 20,
-        //             height: 20,
-        //             symbol: "icons/daypilot.svg#minichevron-down-2",
-        //             fontColor: "#fff",
-        //             toolTip: "Show context menu",
-        //             action: "ContextMenu",
-        //         },
-        //         {
-        //             top: 3,
-        //             right: 25,
-        //             width: 20,
-        //             height: 20,
-        //             symbol: "icons/daypilot.svg#x-circle",
-        //             fontColor: "#fff",
-        //             action: "None",
-        //             toolTip: "Delete event",
-        //             onClick: async args => {
-        //                 const dp = calendarRef.current.control;
-        //                 dp.events.remove(args.source);
-        //             }
-        //         }
-        //     ];
-        //
-        //
-        //     // const participants = args.data.participants;
-        //     // if (participants > 0) {
-        //     //     // show one icon for each participant
-        //     //     for (let i = 0; i < participants; i++) {
-        //     //         args.data.areas.push({
-        //     //             bottom: 5,
-        //     //             right: 5 + i * 30,
-        //     //             width: 24,
-        //     //             height: 24,
-        //     //             action: "None",
-        //     //             image: `https://picsum.photos/24/24?random=${i}`,
-        //     //             style: "border-radius: 50%; border: 2px solid #fff; overflow: hidden;",
-        //     //         });
-        //     //     }
-        //     // }
-        // }
     });
 
     useEffect(() => {
@@ -147,7 +103,8 @@ const Calendar = () => {
             start: convertToISO(mission.startDate),
             end: convertToISO(mission.endDate),
             backColor: getMissionColor(mission.missionType),
-            participants: mission.soldierCount,
+            soldierCount: mission.soldierCount,
+            soldiersOnMission: mission.soldiersOnMission
         }));
 
         const startDate = "2024-02-12";

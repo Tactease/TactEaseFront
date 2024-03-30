@@ -49,3 +49,14 @@ export const formatMissionType = (missionType) => {
             return missionType;
     }
 };
+
+const Mission = (props) => {
+    const { mission } = props;
+return (
+        <div>
+            <div>{formatMissionType(mission.missionType)}</div>
+            <div>{mission.startDate} - {mission.endDate}</div>
+        </div>
+    );
+
+}
