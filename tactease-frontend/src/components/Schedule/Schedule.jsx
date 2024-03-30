@@ -10,22 +10,6 @@ import { getSoldiers, getSoldierById } from "../../API/soldiers.api.js";
 const Calendar = () => {
     const calendarRef = useRef()
 
-    // const reviewEvent = async (e) => {
-    //     let missionInfo = `
-    //     <h1>${formatMissionType(e.data.missionType)}</h1>
-    //     <p class="mission-info">Date: ${formatDate(e.data.start.toString())}</p>
-    //     <p class="mission-info">Hours: ${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}</p>
-    //     <p class="mission-info">Participants:</p>`;
-    //         getSoldiers().then((soldiersData) => {
-    //             console.log(soldiersData.data)
-    //             e.data.soldiersOnMission.forEach((personalNumber) => {
-    //             const soldierData = soldiersData.data.find((soldierData) => soldierData.data.personalNumber === personalNumber);
-    //             missionInfo += `<p class="mission-info">${soldierData.fullName} ${soldierData.pakal}</p>`;
-    //         });
-    //         });
-    //     await DayPilot.Modal.alert(missionInfo);
-    // }
-
     const reviewEvent = async (e) => {
         let missionInfo = `
         <h1>${formatMissionType(e.data.missionType)}</h1>
@@ -33,22 +17,16 @@ const Calendar = () => {
         <p class="mission-info">Hours: ${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}</p>
         <p class="mission-info">Participants:</p>`;
         getSoldiers().then((soldiersData) => {
-            console.log(soldiersData.data)
-            for(let i = 0; i < soldiersData.data.length; i++) {
-                if (e.data.soldiersOnMission.includes(soldiersData.data[i].personalNumber)) {
-                    missionInfo += `<p class="mission-info">${soldiersData.data[i].fullName} ${soldiersData.data[i].pakal}</p>`;
+            e.data.soldiersOnMission.forEach((personalNumber) => {
+                for(let i = 0; i < soldiersData.data.length; i++) {
+                    if (soldiersData.data[i].personalNumber.toString() === personalNumber.toString()) {
+                        console.log("soldier data",soldiersData.data[i])
+                        missionInfo += `<p class="mission-info">${soldiersData.data[i].fullName} ${soldiersData.data[i].pakal}</p>`;
+                    }
                 }
-            }
-            // e.data.soldiersOnMission.forEach((personalNumber) => {
-            //     const soldierData = soldiersData.data.find((soldierData) => soldierData.data.personalNumber === personalNumber);
-            //     if (soldierData) {
-            //         missionInfo += `<p class="mission-info">${soldierData.fullName} ${soldierData.pakal}</p>`;
-            //     } else {
-            //         console.log(`No soldier found with personalNumber: ${personalNumber}`);
-            //     }
-            // });
+            });
+        DayPilot.Modal.alert(missionInfo);
         });
-        await DayPilot.Modal.alert(missionInfo);
     }
 
     const editEvent = async (e) => {
