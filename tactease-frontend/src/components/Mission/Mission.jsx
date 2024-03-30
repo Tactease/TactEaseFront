@@ -50,6 +50,19 @@ export const formatMissionType = (missionType) => {
     }
 };
 
+export const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    let day = date.getDate();
+    let month = date.getMonth() + 1; // Months are zero based
+    const year = date.getFullYear();
+
+    // Pad the day and month with leading zeros, if necessary
+    day = day < 10 ? '0' + day : day;
+    month = month < 10 ? '0' + month : month;
+
+    return day + '/' + month + '/' + year;
+};
+
 const Mission = (props) => {
     const { mission } = props;
 return (

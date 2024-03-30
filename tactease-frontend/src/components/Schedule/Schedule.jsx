@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 import "./schedule.style.css"
 import missionsData from '../../demo-data/missions.json';
-import { convertToISO, formatTime, getMissionColor, formatMissionType } from '../Mission/Mission.jsx';
+import { convertToISO, formatTime, getMissionColor, formatMissionType, formatDate } from '../Mission/Mission.jsx';
 
 
 const Calendar = () => {
@@ -11,7 +11,7 @@ const Calendar = () => {
     const reviewEvent = async (e) => {
         let missionInfo = `
         <h1>${formatMissionType(e.data.missionType)}</h1>
-        <p class="mission-info">Date: ${e.data.start.toString().split('T')[0]}</p>
+        <p class="mission-info">Date: ${formatDate(e.data.start.toString())}</p>
         <p class="mission-info">Hours: ${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}</p>
         <p class="mission-info">Participants:</p>`;
         e.data.soldiersOnMission.forEach((soldier) => {
@@ -124,12 +124,6 @@ const Calendar = () => {
 
         calendarRef.current.control.update({startDate, events});
 
-        const cells = document.querySelectorAll('.calendar_default_cell_inner');
-        cells.forEach((cell, index) => {
-            if (index % 2 === 0) {
-                cell.classList.add('no-border');
-            }
-        });
     }, []);
 
 
