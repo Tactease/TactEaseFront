@@ -12,6 +12,18 @@ const convertToISO = (dateStr) => {
     return `${year}-${month}-${day}T${hours}:${minutes}:00`;
 };
 
+function formatTime(dateStr) {
+    const date = new Date(dateStr);
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+
+    // Pad the hours and minutes with leading zeros, if necessary
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+    return hours + ':' + minutes;
+}
+
 const getMissionColor = (missionType) => {
     switch (missionType) {
         case 'MISSION':
@@ -63,15 +75,16 @@ const Calendar = () => {
             const form = [{
                 name:"Mission Type",
                 id:"missionType",
+                type: "select",
                 options: [
-                    {name:"Mission", value:"MISSION"},
-                    {name:"Patrol by car", value:"PATROL_BY_CAR"},
-                    {name:"Watch", value:"WATCH"},
-                    {name:"Guard", value:"GUARD"}
+                    {id: "MISSION", name: "Mission" },
+                    {id: "PATROL_BY_CAR" , name: "Patrol by car"},
+                    {id: "WATCH" , name: "Watch"},
+                    {id: "GUARD" , name: "Guard"}
                 ]},
-                // {name:"Start Date", id:"startDate", value: args.start.value.toString()},
-                // {name:"End Date", id:"endDate", value: args.end.value.toString()},
                 {name:"Soldier Count", id:"soldierCount", type: "number"}];
+                // {type:"hidden", name:"Start Date", id:"startDate", value: args.start.value.toString()},
+                // {type:"hidden", name:"End Date", id:"endDate", value: args.end.value.toString()},
             const modal = await DayPilot.Modal.form(form);
             dp.clearSelection();
             if (!modal.result) { return; }
@@ -80,8 +93,8 @@ const Calendar = () => {
                 start: args.start,
                 end: args.end,
                 id: DayPilot.guid(),
-                text: `${formatMissionType(modal.result.missionType)}`,
-                backColor: '#58B7D4',
+                text: `${formatMissionType(modal.result.missionType)}\n${formatTime(args.start.toString())} - ${formatTime(args.end.toString())}`,
+                backColor: getMissionColor(modal.result.missionType),
             });
         },
         onEventClick: async args => {
