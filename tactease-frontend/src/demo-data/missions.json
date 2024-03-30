@@ -5,7 +5,7 @@
     "startDate": "12/02/2024 6:00",
     "endDate": "12/02/2024 10:00",
     "soldierCount": 2,
-    "soldiersOnMission": []
+    "soldiersOnMission": [1234567,6546546]
   },
   {
     "missionId": 2,
@@ -13,7 +13,7 @@
     "startDate": "12/02/2024 14:00",
     "endDate": "12/02/2024 20:00",
     "soldierCount": 2,
-    "soldiersOnMission": []
+    "soldiersOnMission": [8256412,6589711]
   },
   {
     "missionId": 3,

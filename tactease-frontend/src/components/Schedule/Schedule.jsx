@@ -8,6 +8,17 @@ import { convertToISO, formatTime, getMissionColor, formatMissionType } from '..
 const Calendar = () => {
     const calendarRef = useRef()
 
+    const reviewEvent = async (e) => {
+        let missionInfo = `
+        <p class="mission-info">Date: ${e.data.start.toString().split('T')[0]}</p>
+        <p class="mission-info">Hours: ${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}</p>
+        <p class="mission-info">Participants:</p>`;
+        e.data.soldiersOnMission.forEach((soldier) => {
+            missionInfo += `<p class="mission-info">${soldier}</p>`;
+        });
+        await DayPilot.Modal.alert(missionInfo);
+    }
+
     const editEvent = async (e) => {
         const dp = calendarRef.current.control;
         const form = [{
@@ -72,7 +83,7 @@ const Calendar = () => {
             });
         },
         onEventClick: async args => {
-            await editEvent(args.e);
+            await reviewEvent(args.e);
         },
         contextMenu: new DayPilot.Menu({
             items: [
