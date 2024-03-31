@@ -17,13 +17,24 @@ const Calendar = () => {
         <p class="mission-info">Hours: ${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}</p>
         <p class="mission-info">Participants:</p>`;
         getSoldiers().then((soldiersData) => {
+                missionInfo += `<table aria-label="custom pagination table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Personal Number</th>
+            <th>Pakal</th>
+          </tr>`;
             e.data.soldiersOnMission.forEach((personalNumber) => {
+            missionInfo +=`</thead>
+        <tbody>
+        <tr>`
                 for(let i = 0; i < soldiersData.data.length; i++) {
                     if (soldiersData.data[i].personalNumber.toString() === personalNumber.toString()) {
-                        missionInfo += `<p class="mission-info">${soldiersData.data[i].fullName} ${soldiersData.data[i].personalNumber} ${soldiersData.data[i].pakal}</p>`;
+                        missionInfo += `<td>${soldiersData.data[i].fullName}</td> <td>${soldiersData.data[i].personalNumber}</td> <td>${soldiersData.data[i].pakal}</td>`;
                     }
                 }
             });
+                missionInfo += `</tr></tbody></table>`;
         DayPilot.Modal.alert(missionInfo);
         });
     }
@@ -75,8 +86,6 @@ const Calendar = () => {
                     {id: "GUARD" , name: "Guard"}
                 ]},
                 {name:"Soldier Count", id:"soldierCount", type: "number"}];
-                // {type:"hidden", name:"Start Date", id:"startDate", value: args.start.value.toString()},
-                // {type:"hidden", name:"End Date", id:"endDate", value: args.end.value.toString()},
             const modal = await DayPilot.Modal.form(form);
             dp.clearSelection();
             if (!modal.result) { return; }
