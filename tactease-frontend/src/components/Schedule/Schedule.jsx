@@ -1,63 +1,91 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 import "./schedule.style.css"
 import { convertToISO, formatTime, getMissionColor, formatMissionType, formatDate, formatMissionDate } from '../Mission/Mission.jsx';
 import { getMissions, createMission, deleteMission, updateMission } from '../../API/missions.api.js';
 import { getSoldiers, getSoldierById } from "../../API/soldiers.api.js";
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
-import { StyledTableCell, StyledTableRow } from './Schedule.style.js';
+import { TableContainer, TableHeader, TableRow, TableCell, TableHead, TableBody } from './Schedule.style.js';
 
 
 const Calendar = () => {
     const calendarRef = useRef()
+    const [soldiersData, setSoldiersData] = useState([]);
 
-    const reviewEvent = async (e) => {
-        let missionInfo = `
-        <h1>${formatMissionType(e.data.missionType)}</h1>
-        <p class="mission-info">Date: ${formatDate(e.data.start.toString())}</p>
-        <p class="mission-info">Hours: ${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}</p>
-        <p class="mission-info">Participants:</p>`;
-        getSoldiers().then((soldiersData) => {
-                missionInfo +=
-                    ` <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <StyledTableRow>
-            <StyledTableCell>Name</StyledTableCell>
-            <StyledTableCell align="right">Personal Number</StyledTableCell>
-            <StyledTableCell align="right">Pakal</StyledTableCell>
-          </StyledTableRow></TableHead>`;
-            e.data.soldiersOnMission.forEach((personalNumber) => {
-                missionInfo +=`</TableHead>
-        <TableBody>`
-                for(let i = 0; i < soldiersData.data.length; i++) {
-                    if (soldiersData.data[i].personalNumber.toString() === personalNumber.toString()) {
-                        missionInfo += `<StyledTableCell>${soldiersData.data[i].fullName}</StyledTableCell> <StyledTableCell>${soldiersData.data[i].personalNumber}</StyledTableCell> <StyledTableCell>${soldiersData.data[i].pakal}</StyledTableCell>`;
-                    }
-                }
-            });
-                missionInfo += `</TableBody></Table></TableContainer>`;
-// `<table aria-label="custom pagination table">
-//         <thead>
-//           <tr>
-//             <th>Name</th>
-//             <th>Personal Number</th>
-//             <th>Pakal</th>
-//           </tr>`;
-//             e.data.soldiersOnMission.forEach((personalNumber) => {
-//             missionInfo +=`</thead>
-//         <tbody>
-//         <tr>`
-//                 for(let i = 0; i < soldiersData.data.length; i++) {
-//                     if (soldiersData.data[i].personalNumber.toString() === personalNumber.toString()) {
-//                         missionInfo += `<td>${soldiersData.data[i].fullName}</td> <td>${soldiersData.data[i].personalNumber}</td> <td>${soldiersData.data[i].pakal}</td>`;
-//                     }
-//                 }
-//             });
-//                 missionInfo += `</tr></tbody></table>`;
-        DayPilot.Modal.alert(missionInfo);
+    useEffect(() => {
+        getSoldiers().then((data) => {
+            setSoldiersData(data.data);
         });
-    }
+    }, []);
+    console.log(soldiersData);
+    const reviewEvent = async (e) => {
+        // getSoldiers().then((soldiersData) => {
+        //         missionInfo +=`<TableContainer>
+        // <TableHead>
+        //   <TableRow>
+        //     <TableHeader>Name</TableHeader>
+        //     <TableHeader>Personal Number</TableHeader>
+        //     <TableHeader>Pakal</TableHeader>
+        //   </TableRow><TableBody>`;
+        //     e.data.soldiersOnMission.forEach((personalNumber) => {
+        //     missionInfo +=`<TableRow>`
+        //         for(let i = 0; i < soldiersData.data.length; i++) {
+        //             if (soldiersData.data[i].personalNumber.toString() === personalNumber.toString()) {
+        //                 missionInfo += `<TableCell>${soldiersData.data[i].fullName}</TableCell> <TableCell>${soldiersData.data[i].personalNumber}</TableCell> <TableCell>${soldiersData.data[i].pakal}</TableCell>`;
+        //             }
+        //         }
+        let missionInfo = (
+            <>
+                <h1>{formatMissionType(e.data.missionType)}</h1>
+                <p className="mission-info">Date: {formatDate(e.data.start.toString())}</p>
+                <p className="mission-info">Hours: {formatTime(e.data.start.toString())} - {formatTime(e.data.end.toString())}</p>
+                <p className="mission-info">Participants:</p>
+                <TableContainer>
+                    <TableHead>
+                        <TableRow>
+                            <TableHeader>Name</TableHeader>
+                            <TableHeader>Personal Number</TableHeader>
+                            <TableHeader>Pakal</TableHeader>
+                        </TableRow>
+                    </TableHead>
+                    {/*<TableBody>*/}
+                    {/*        {e.data.soldiersOnMission.map((personalNumber) => {*/}
+                    {/*            soldiersData.forEach((soldier) => {*/}
+                    {/*                if(soldier.personalNumber === personalNumber) {*/}
+                    {/*                // const soldier = soldiersData.find(soldier => soldier.personalNumber === personalNumber);*/}
+                    {/*                    <TableRow>*/}
+                    {/*                        <TableCell>{soldier.fullName}</TableCell>*/}
+                    {/*                        <TableCell>{soldier.personalNumber}</TableCell>*/}
+                    {/*                        <TableCell>{soldier.pakal}</TableCell>*/}
+                    {/*                    </TableRow>*/}
+                    {/*                }*/}
+                    {/*        })}*/}
+                    {/*</TableBody>*/}
+                    <TableBody>
+                        {e.data.soldiersOnMission.map((personalNumber) => {
+                            if (!soldiersData) {
+                                return <div>Loading soldiers data...</div>;
+                            }
+                            return soldiersData.map((soldier) => {
+                                if(soldier.personalNumber === personalNumber) {
+                                    return (
+                                        <TableRow key={soldier._id}>
+                                            <TableCell>{soldier.fullName}</TableCell>
+                                            <TableCell>{soldier.personalNumber}</TableCell>
+                                            <TableCell>{soldier.pakal}</TableCell>
+                                        </TableRow>
+                                    );
+                                }
+                                // return null;
+                            });
+                        })}
+                    </TableBody>
+                </TableContainer>
+            </>
+        );
+        let missionInfoString = ReactDOMServer.renderToString(missionInfo);
+        DayPilot.Modal.alert(missionInfoString);
+    };
 
     const editEvent = async (e) => {
         const dp = calendarRef.current.control;
