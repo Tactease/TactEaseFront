@@ -61,11 +61,20 @@ const Calendar = () => {
             }];
         const modal = await DayPilot.Modal.form(form, e.data);
         if (!modal.result) { return; }
+        const updateInfo = {
+            missionType: modal.result.missionType,
+            soldierCount: modal.result.soldierCount
+        };
+        console.log("update mission", e.data.id);
+        updateMission(e.data.id.toString(), updateInfo).then((res => {
+            console.log("mission updated", res);
+        }));
             e.data.soldierCount = modal.result.soldierCount,
             e.data.missionType = modal.result.missionType,
             e.data.text = `${formatMissionType(modal.result.missionType)}\n${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}`,
             e.data.backColor = getMissionColor(modal.result.missionType),
-        dp.events.update(e);
+            dp.events.update(e);
+
     };
 
     const [calendarConfig, setCalendarConfig] = useState({
@@ -97,7 +106,6 @@ const Calendar = () => {
                 endDate: formatMissionDate(args.end.value.toString()),
                 soldiersOnMission: []
             };
-            console.log("new mission", newMission);
 
             createMission(newMission).then((res => {
                 console.log("new mission created", res);
@@ -116,8 +124,23 @@ const Calendar = () => {
         onEventClick: async args => {
             await reviewEvent(args.e);
         },
+        onEventMoved: args => {
+            const dp = calendarRef.current.control;
+            const e = args.e;
+            e.data.text = `${formatMissionType(e.data.missionType)}\n${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}`;
+            dp.events.update(e);
+        },
         contextMenu: new DayPilot.Menu({
             items: [
+                {
+                    text: "Edit",
+                    onClick: async args => {
+                        await editEvent(args.source);
+                    }
+                },
+                {
+                    text: "-"
+                },
                 {
                     text: "Delete",
                     onClick: async args => {
@@ -132,15 +155,6 @@ const Calendar = () => {
                                 console.log("mission not deleted", err);
                             });
                     },
-                },
-                {
-                    text: "-"
-                },
-                {
-                    text: "Edit",
-                    onClick: async args => {
-                        await editEvent(args.source);
-                    }
                 }
             ]
         }),
