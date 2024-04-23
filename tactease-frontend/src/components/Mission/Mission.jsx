@@ -63,6 +63,23 @@ export const formatDate = (dateStr) => {
     return day + '/' + month + '/' + year;
 };
 
+export const formatMissionDate = (dateStr) => {
+    const date = new Date(dateStr);
+    let day = date.getDate();
+    let month = date.getMonth() + 1; // Months are zero based
+    const year = date.getFullYear();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+
+    // Pad the day, month, hours and minutes with leading zeros, if necessary
+    day = day < 10 ? '0' + day : day;
+    month = month < 10 ? '0' + month : month;
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+}
+
 const Mission = (props) => {
     const { mission } = props;
 return (

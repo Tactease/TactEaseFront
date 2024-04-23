@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 import "./schedule.style.css"
 // import missionsData from '../../demo-data/missions.json';
-import { convertToISO, formatTime, getMissionColor, formatMissionType, formatDate } from '../Mission/Mission.jsx';
+import { convertToISO, formatTime, getMissionColor, formatMissionType, formatDate, formatMissionDate } from '../Mission/Mission.jsx';
 import { getMissions, createMission, deleteMission, updateMission } from '../../API/missions.api.js';
 import { getSoldiers, getSoldierById } from "../../API/soldiers.api.js";
 
@@ -93,8 +93,8 @@ const Calendar = () => {
                 classId: 40,
                 missionType: modal.result.missionType,
                 soldierCount: modal.result.soldierCount,
-                startDate: args.start.value.toString(),
-                endDate: args.end.value.toString(),
+                startDate: formatMissionDate(args.start.value.toString()),
+                endDate: formatMissionDate(args.end.value.toString()),
                 soldiersOnMission: []
             };
             console.log("new mission", newMission);
@@ -123,12 +123,13 @@ const Calendar = () => {
                     onClick: async args => {
                         const dp = calendarRef.current.control;
                         dp.events.remove(args.source);
-                       await deleteMission(args.source.data.id.toString())
-                            .then((res => {
-                            console.log("mission deleted", res);
-                        }).catch((err) => {
-                            console.log("mission not deleted", err);
-                        }));
+                        await deleteMission(args.source.data.id.toString())
+                            .then((res) => {
+                                console.log("mission deleted", res);
+                            })
+                            .catch((err) => {
+                                console.log("mission not deleted", err);
+                            });
                     },
                 },
                 {
