@@ -122,9 +122,10 @@ const Calendar = () => {
                     text: "Delete",
                     onClick: async args => {
                         const dp = calendarRef.current.control;
-                        dp.events.remove(args.source);
+                        console.log("delete mission", args.source.data.id);
                         await deleteMission(args.source.data.id.toString())
                             .then((res) => {
+                                dp.events.remove(args.source);
                                 console.log("mission deleted", res);
                             })
                             .catch((err) => {
