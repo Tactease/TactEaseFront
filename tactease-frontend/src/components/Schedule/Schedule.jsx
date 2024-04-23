@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 import "./schedule.style.css"
-// import missionsData from '../../demo-data/missions.json';
 import { convertToISO, formatTime, getMissionColor, formatMissionType, formatDate, formatMissionDate } from '../Mission/Mission.jsx';
 import { getMissions, createMission, deleteMission, updateMission } from '../../API/missions.api.js';
 import { getSoldiers, getSoldierById } from "../../API/soldiers.api.js";
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
+import { StyledTableCell, StyledTableRow } from './Schedule.style.js';
 
 
 const Calendar = () => {
@@ -17,24 +18,43 @@ const Calendar = () => {
         <p class="mission-info">Hours: ${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}</p>
         <p class="mission-info">Participants:</p>`;
         getSoldiers().then((soldiersData) => {
-                missionInfo += `<table aria-label="custom pagination table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Personal Number</th>
-            <th>Pakal</th>
-          </tr>`;
+                missionInfo +=
+                    ` <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableHead>
+          <StyledTableRow>
+            <StyledTableCell>Name</StyledTableCell>
+            <StyledTableCell align="right">Personal Number</StyledTableCell>
+            <StyledTableCell align="right">Pakal</StyledTableCell>
+          </StyledTableRow></TableHead>`;
             e.data.soldiersOnMission.forEach((personalNumber) => {
-            missionInfo +=`</thead>
-        <tbody>
-        <tr>`
+                missionInfo +=`</TableHead>
+        <TableBody>`
                 for(let i = 0; i < soldiersData.data.length; i++) {
                     if (soldiersData.data[i].personalNumber.toString() === personalNumber.toString()) {
-                        missionInfo += `<td>${soldiersData.data[i].fullName}</td> <td>${soldiersData.data[i].personalNumber}</td> <td>${soldiersData.data[i].pakal}</td>`;
+                        missionInfo += `<StyledTableCell>${soldiersData.data[i].fullName}</StyledTableCell> <StyledTableCell>${soldiersData.data[i].personalNumber}</StyledTableCell> <StyledTableCell>${soldiersData.data[i].pakal}</StyledTableCell>`;
                     }
                 }
             });
-                missionInfo += `</tr></tbody></table>`;
+                missionInfo += `</TableBody></Table></TableContainer>`;
+// `<table aria-label="custom pagination table">
+//         <thead>
+//           <tr>
+//             <th>Name</th>
+//             <th>Personal Number</th>
+//             <th>Pakal</th>
+//           </tr>`;
+//             e.data.soldiersOnMission.forEach((personalNumber) => {
+//             missionInfo +=`</thead>
+//         <tbody>
+//         <tr>`
+//                 for(let i = 0; i < soldiersData.data.length; i++) {
+//                     if (soldiersData.data[i].personalNumber.toString() === personalNumber.toString()) {
+//                         missionInfo += `<td>${soldiersData.data[i].fullName}</td> <td>${soldiersData.data[i].personalNumber}</td> <td>${soldiersData.data[i].pakal}</td>`;
+//                     }
+//                 }
+//             });
+//                 missionInfo += `</tr></tbody></table>`;
         DayPilot.Modal.alert(missionInfo);
         });
     }
