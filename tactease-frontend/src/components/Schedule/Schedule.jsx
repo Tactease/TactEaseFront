@@ -125,6 +125,14 @@ const Calendar = () => {
             await reviewEvent(args.e);
         },
         onEventMoved: args => {
+            const updatedTime = {
+                startDate: formatMissionDate(args.newStart.value.toString()),
+                endDate: formatMissionDate(args.newEnd.value.toString())
+            };
+            updateMission(args.e.data.id.toString(), updatedTime).then((res => {
+                console.log("mission updated", res);
+            }));
+            console.log(args);
             const dp = calendarRef.current.control;
             const e = args.e;
             e.data.text = `${formatMissionType(e.data.missionType)}\n${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}`;
