@@ -23,3 +23,7 @@ export const updateSoldier = async (soldierId, soldier) => {
 export const deleteSoldier = async (soldierId) => {
     return await axios.delete(`${renderURL}/soldiers/${soldierId}`);
 }
+
+export const loginSoldier = async (soldierInfo) => {
+    return await axios.post(`${renderURL}/soldiers/login`, soldierInfo);
+}
