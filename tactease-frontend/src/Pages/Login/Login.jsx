@@ -93,7 +93,7 @@ const Login = () => {
     return (
         <LoginContainer>
             <PageTitle title="Login" />
-            {message && <Alert severity="error">{message}</Alert>}
+            {!isSuccess && message && <Alert severity="error">{message}</Alert>}
             <LoginForm>
                 <FormControl>
                     <TextField id="personalNumber" label="Personal Number" variant="standard"
