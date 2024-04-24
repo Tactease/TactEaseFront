@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState } from 'react'
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
 import { LoginContainer, LoginForm } from './Login.styled';
 import TextField from '@mui/material/TextField';
@@ -9,13 +9,13 @@ import { loginSoldier } from '../../API/soldiers.api.js';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [userData, setUserData] = React.useState({ userType: 'Donor', });
-    const [personalNumberErr, setPersonalNumberErr] = React.useState(false);
-    const [personalNumberMsg, setPersonalNumberMsg] = React.useState("");
-    const [passwordErr, setPasswordErr] = React.useState(false);
-    const [passwordMsg, setPasswordMsg] = React.useState("");
-    const [isSuccess, setIsSuccess] = React.useState(false);
-    const [message, setMessage] = React.useState("");
+    const [userData, setUserData] = useState({ userType: 'Donor', });
+    const [personalNumberErr, setPersonalNumberErr] = useState(false);
+    const [personalNumberMsg, setPersonalNumberMsg] = useState("");
+    const [passwordErr, setPasswordErr] = useState(false);
+    const [passwordMsg, setPasswordMsg] = useState("");
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [message, setMessage] = useState("");
     const navigate = useNavigate();
 
     const validatePersonalNumber = (value) => {
@@ -93,8 +93,7 @@ const Login = () => {
     return (
         <LoginContainer>
             <PageTitle title="Login" />
-            {!isSuccess && message && <Alert severity="error">{message}</Alert>}
-            {isSuccess && message && <Alert severity="success">{message}</Alert>}
+            {message && <Alert severity="error">{message}</Alert>}
             <LoginForm>
                 <FormControl>
                     <TextField id="personalNumber" label="Personal Number" variant="standard"
@@ -103,7 +102,8 @@ const Login = () => {
                 </FormControl>
                 <TextField id="password" label="Password" type="password" variant="standard"
                     onChange={(e) => handleForm(e)}
-                    error={passwordErr} helperText={passwordMsg} />
+                    error={passwordErr} helperText={passwordMsg}
+                    autoComplete="current-password" />
                 <Button width={85} text={'Login'} onClick={(e) => loginFunction(e, userData)}></Button>
             </LoginForm>
         </LoginContainer>
