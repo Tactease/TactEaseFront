@@ -1,6 +1,7 @@
 import Header from './components/Header/Header.jsx';
-import Calendar from './components/Schedule/Schedule.jsx';
+import CalenderPage from './Pages/CalenderPage/CalenderPage.jsx';
 import Login from "./Pages/Login/Login.jsx";
+import AddMissions from "./Pages/AddMissions/AddMissions.jsx";
 import {Route, Routes} from 'react-router-dom'
 
 function App() {
@@ -8,8 +9,9 @@ function App() {
         <div className="App">
             <Header/>
             <Routes>
-                <Route path="/" element={<Calendar/>}/>
+                <Route path="/" element={<CalenderPage/>}/>
                 <Route path="/login" element={<Login/>}/>
+                <Route path="/addMissions" element={<AddMissions/>}/>
             </Routes>
         </div>
     );
