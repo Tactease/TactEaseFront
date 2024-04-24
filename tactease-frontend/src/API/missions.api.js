@@ -1,23 +1,24 @@
 import axios from 'axios';
 
 const baseURL = 'http://localhost:3000';
+const renderURL = 'https://tactease-sx73.onrender.com';
 
 export const getMissions = async () => {
-    return await axios.get(`${baseURL}/missions`);
+    return await axios.get(`${renderURL}/missions`);
 }
 
 export const getMissionById = async (missionId) => {
-    return await axios.get(`${baseURL}/missions/${missionId}`);
+    return await axios.get(`${renderURL}/missions/${missionId}`);
 }
 
 export const createMission = async (mission) => {
-    return await axios.post(`${baseURL}/missions`, mission);
+    return await axios.post(`${renderURL}/missions`, mission);
 }
 
 export const updateMission = async (missionId, mission) => {
-    return await axios.put(`${baseURL}/missions/${missionId}`, mission);
+    return await axios.put(`${renderURL}/missions/${missionId}`, mission);
 }
 
 export const deleteMission = async (missionId) => {
-    return await axios.delete(`${baseURL}/missions/${missionId}`);
+    return await axios.delete(`${renderURL}/missions/${missionId}`);
 }
