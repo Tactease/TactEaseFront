@@ -10,7 +10,9 @@ import { Link } from 'react-router-dom';
 const Header = ({}) => {
     return (
         <HeaderStyle>
+            <Link to="/">
             <LogoStyle src={Logo} alt="logo"/>
+            </Link>
             <Navbar />
             <UserInfo/>
         </HeaderStyle>
