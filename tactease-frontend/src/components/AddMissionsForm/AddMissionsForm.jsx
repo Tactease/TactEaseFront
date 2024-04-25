@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { FormConstainer, TextFieldContainer } from "./AddMissionsForm.style";
 import Button from "../Button/Button";
 import { format } from 'date-fns';
+import "./AddMissionsForm.css";
 
 const missionTypes = [
     {
@@ -45,11 +46,6 @@ const AddMissionsForm = (props) => {
         setMissionData(prevState => ({...prevState, [name]: formattedValue}));
     }
 
-    // const addMission = () => {
-    //
-    //     setMissions(prevState => [...prevState, missionData]);
-    //     setShowForm(false);
-    // }
 
     const addMission = () => {
         if (editMission) { // Add this block
@@ -105,7 +101,9 @@ const AddMissionsForm = (props) => {
                     onChange={(e) => handleForm(e)}
                 />
                 </TextFieldContainer>
-                <Button width={85} text={'Add'} onClick={addMission}></Button>
+                <Button width={85} text={'Add'} onClick={addMission} disabled={
+                    !missionData.missionType || !missionData.startDate || !missionData.endDate || !missionData.soldierCount
+                }></Button>
             </FormConstainer>
     )
 }

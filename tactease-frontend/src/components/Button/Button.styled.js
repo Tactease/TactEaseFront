@@ -22,7 +22,13 @@ export const ButtonStyled = styled.button`
     }
 
     &:disabled {
-        background-color: #ccc; /* change to the color you want */
-        cursor: not-allowed;
+        cursor: default;
+        opacity: 0.6;
+    }
+
+    &:disabled:hover {
+        background-color: #B2A6FF;
+        color: #ffffff;
+        border: 1px solid #B2A6FF;
     }
 `;
