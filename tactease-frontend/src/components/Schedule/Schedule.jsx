@@ -9,6 +9,7 @@ import {TableContainer, TableHeader, TableRow, TableCell, TableHead, TableBody, 
 
 
 const Calendar = () => {
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
     const calendarRef = useRef()
     const soldiersDataRef = useRef([]);
     const isLoadingRef = useRef(true);
@@ -101,99 +102,107 @@ const Calendar = () => {
     };
 
     const [calendarConfig, setCalendarConfig] = useState({
-        viewType: "Week",
-        durationBarVisible: false,
-        eventHeight: 50,
-        timeRangeSelectedHandling: "Enabled",
-        onTimeRangeSelected: async args => {
-            const dp = calendarRef.current.control;
-            const form = [{
-                name:"Mission Type",
-                id:"missionType",
-                type: "select",
-                options: [
-                    {id: "MISSION", name: "Mission" },
-                    {id: "PATROL_BY_CAR" , name: "Patrol by car"},
-                    {id: "WATCH" , name: "Watch"},
-                    {id: "GUARD" , name: "Guard"}
-                ]},
-                {name:"Soldier Count", id:"soldierCount", type: "number"}];
-            const modal = await DayPilot.Modal.form(form);
-            dp.clearSelection();
-            if (!modal.result) { return; }
-            const newMission = {
-                classId: 40,
-                missionType: modal.result.missionType,
-                soldierCount: modal.result.soldierCount,
-                startDate: formatMissionDate(args.start.value.toString()),
-                endDate: formatMissionDate(args.end.value.toString()),
-                soldiersOnMission: []
-            };
-
-            createMission(newMission).then((res => {
-                console.log("new mission created", res);
-            }));
-            dp.events.add({
-                start: args.start,
-                end: args.end,
-                id: DayPilot.guid(),
-                soldierCount: modal.result.soldierCount,
-                missionType: modal.result.missionType,
-                text: `${formatMissionType(modal.result.missionType)}\n${formatTime(args.start.toString())} - ${formatTime(args.end.toString())}`,
-                backColor: getMissionColor(modal.result.missionType),
-                soldiersOnMission: []
-            });
-        },
-        onEventClick: async args => {
-            await reviewEvent(args.e);
-        },
-        onEventMoved: args => {
-            const updatedTime = {
-                startDate: formatMissionDate(args.newStart.value.toString()),
-                endDate: formatMissionDate(args.newEnd.value.toString())
-            };
-            updateMission(args.e.data.id.toString(), updatedTime).then((res => {
-                console.log("mission updated", res);
-            }));
-            console.log(args);
-            const dp = calendarRef.current.control;
-            const e = args.e;
-            e.data.text = `${formatMissionType(e.data.missionType)}\n${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}`;
-            dp.events.update(e);
-        },
-        contextMenu: new DayPilot.Menu({
-            items: [
-                {
-                    text: "Edit",
-                    onClick: async args => {
-                        await editEvent(args.source);
-                    }
+            viewType: "Week",
+            durationBarVisible: false,
+            eventHeight: 50,
+            timeRangeSelectedHandling: user.pakal === "COMMANDER" ? "Enabled" : "Disabled",
+            eventMoveHandling: user.pakal === "COMMANDER" ? "Update" : "Disabled",
+            onTimeRangeSelected: async args => {
+                const dp = calendarRef.current.control;
+                const form = [{
+                    name: "Mission Type",
+                    id: "missionType",
+                    type: "select",
+                    options: [
+                        {id: "MISSION", name: "Mission"},
+                        {id: "PATROL_BY_CAR", name: "Patrol by car"},
+                        {id: "WATCH", name: "Watch"},
+                        {id: "GUARD", name: "Guard"}
+                    ]
                 },
-                {
-                    text: "-"
-                },
-                {
-                    text: "Delete",
-                    onClick: async args => {
-                        const dp = calendarRef.current.control;
-                        console.log("delete mission", args.source.data.id);
-                        await deleteMission(args.source.data.id.toString())
-                            .then((res) => {
-                                dp.events.remove(args.source);
-                                console.log("mission deleted", res);
-                            })
-                            .catch((err) => {
-                                console.log("mission not deleted", err);
-                            });
-                    },
+                    {name: "Soldier Count", id: "soldierCount", type: "number"}];
+                const modal = await DayPilot.Modal.form(form);
+                dp.clearSelection();
+                if (!modal.result) {
+                    return;
                 }
-            ]
-        }),
+                const newMission = {
+                    classId: 40,
+                    missionType: modal.result.missionType,
+                    soldierCount: modal.result.soldierCount,
+                    startDate: formatMissionDate(args.start.value.toString()),
+                    endDate: formatMissionDate(args.end.value.toString()),
+                    soldiersOnMission: []
+                };
+
+                createMission(newMission).then((res => {
+                    console.log("new mission created", res);
+                }));
+                dp.events.add({
+                    start: args.start,
+                    end: args.end,
+                    id: DayPilot.guid(),
+                    soldierCount: modal.result.soldierCount,
+                    missionType: modal.result.missionType,
+                    text: `${formatMissionType(modal.result.missionType)}\n${formatTime(args.start.toString())} - ${formatTime(args.end.toString())}`,
+                    backColor: getMissionColor(modal.result.missionType),
+                    soldiersOnMission: []
+                });
+            },
+            onEventClick: async args => {
+                await reviewEvent(args.e);
+            },
+            onEventMoved: args => {
+                const updatedTime = {
+                    startDate: formatMissionDate(args.newStart.value.toString()),
+                    endDate: formatMissionDate(args.newEnd.value.toString())
+                };
+                updateMission(args.e.data.id.toString(), updatedTime).then((res => {
+                    console.log("mission updated", res);
+                }));
+                console.log(args);
+                const dp = calendarRef.current.control;
+                const e = args.e;
+                e.data.text = `${formatMissionType(e.data.missionType)}\n${formatTime(e.data.start.toString())} - ${formatTime(e.data.end.toString())}`;
+                dp.events.update(e);
+            },
+            contextMenu: new DayPilot.Menu({
+                items: user.pakal === "COMMANDER" ? [
+                    {
+                        text: "Edit",
+                        onClick: async args => {
+                            await editEvent(args.source);
+                        }
+                    },
+                    {
+                        text: "-"
+                    },
+                    {
+                        text: "Delete",
+                        onClick: async args => {
+                            const dp = calendarRef.current.control;
+                            console.log("delete mission", args.source.data.id);
+                            await deleteMission(args.source.data.id.toString())
+                                .then((res) => {
+                                    dp.events.remove(args.source);
+                                    console.log("mission deleted", res);
+                                })
+                                .catch((err) => {
+                                    console.log("mission not deleted", err);
+                                });
+                        },
+                    }
+                ] : []
+            }),
     });
 
     useEffect(() => {
         getMissions().then((missionsData) => {
-            const events = missionsData.data.map((mission) => ({
+            let filteredMissions = missionsData.data;
+            if (user.pakal !== "COMMANDER") {
+                filteredMissions = filteredMissions.filter(mission => mission.soldiersOnMission.includes(user.personalNumber));
+            }
+            const events = filteredMissions.map((mission) => ({
                 id: mission._id,
                 text: `${formatMissionType(mission.missionType)}\n${mission.startDate.split(' ')[1]} - ${mission.endDate.split(' ')[1]}`,
                 missionType: mission.missionType,
