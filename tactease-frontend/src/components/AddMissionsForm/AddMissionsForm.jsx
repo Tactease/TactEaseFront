@@ -27,7 +27,7 @@ const missionTypes = [
 
 const AddMissionsForm = (props) => {
     const { setMissions, setShowForm, editMission } = props;
-    const [missionData, setMissionData] = useState( editMission || {classId:40});
+    const [missionData, setMissionData] = useState( editMission || {classId:40, soldiersOnMission:[]} );
     const [currentDate, setCurrentDate] = useState(format(new Date(), 'yyyy-MM-ddTHH:mm'));
 
     useEffect(() => {

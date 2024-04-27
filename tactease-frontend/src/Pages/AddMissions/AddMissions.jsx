@@ -6,23 +6,30 @@ import { MissionsLayout, DeleteButton } from "./AddMissions.style.js";
 import AddMissionsForm from "../../components/AddMissionsForm/AddMissionsForm.jsx";
 import { formatMissionType } from "../../components/Mission/Mission.jsx"
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
-import EditIcon from '@mui/icons-material/Edit';
+import {createMission} from "../../API/missions.api.js";
+// import EditIcon from '@mui/icons-material/Edit';
 
 const AddMissons = () => {
 
 const [missions, setMissions] = useState([]);
 const [showForm, setShowForm] = useState(false);
-const [editIndex, setEditIndex] = useState(null);
+// const [editIndex, setEditIndex] = useState(null);
 
 const deleteMission = (index) => {
     const newMissions = missions.filter((mission, i) => i !== index);
     setMissions(newMissions);
 }
 
-const editMission = (index) => { // Add this function
-    setEditIndex(index);
-    setShowForm(true);
-}
+const submitMissions = async () => {
+        console.log("missions", missions)
+        await createMission(missions)
+        .then((res => {console.log("new missions created", res)}))
+    }
+
+// const editMission = (index) => { // Add this function
+//     setEditIndex(index);
+//     setShowForm(true);
+// }
 
     return (
         <MissionsLayout>
@@ -52,7 +59,7 @@ const editMission = (index) => { // Add this function
                     ))}
                     {showForm ? (
                         <TableRow>
-                            <AddMissionsForm setShowForm={setShowForm} setMissions={setMissions} editMission={missions[editIndex]} />
+                            <AddMissionsForm setShowForm={setShowForm} setMissions={setMissions} />
                         </TableRow>
                     ) : (
                         missions.length < 6 ? (
@@ -62,7 +69,7 @@ const editMission = (index) => { // Add this function
                     )}
                 </TableBody>
             </TableContainer>
-            <Button text="Send Missions" width={150} onClick={()=> console.log(missions)} disabled={missions.length === 0}/>
+            <Button text="Send Missions" width={150} onClick={submitMissions} disabled={missions.length === 0}/>
         </MissionsLayout>
     )
 }
