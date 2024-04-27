@@ -17,7 +17,6 @@ const Calendar = () => {
     const soldiersDataRef = useRef([]);
     const isLoadingRef = useRef(true);
     const [startDate, setStartDate] = useState(new Date());
-    const slidingTimeout = useRef();
 
 
     useEffect(() => {
@@ -27,7 +26,6 @@ const Calendar = () => {
         });
     }, []);
 
-    console.log('startDate:', startDate);
 
     const nextWeek = () => {
         setStartDate(prevDate => new DayPilot.Date(prevDate).addDays(7));
@@ -122,6 +120,8 @@ const Calendar = () => {
             viewType: "Week",
             durationBarVisible: false,
             eventHeight: 50,
+            headerDateFormat: 'MM/dd',
+            seperators: [{ color: "red", location: new DayPilot.Date(), width: 2, layer: "AboveEvents"}],
             timeRangeSelectedHandling: user.pakal === "COMMANDER" ? "Enabled" : "Disabled",
             eventMoveHandling: user.pakal === "COMMANDER" ? "Update" : "Disabled",
             onTimeRangeSelected: async args => {
@@ -230,26 +230,32 @@ const Calendar = () => {
                 soldiersOnMission: mission.soldiersOnMission
             }));
 
-            slidingTimeout.current = setInterval(() => {
-                if (calendarRef.current) {
-                    calendarRef.current.control.update({
-                        separators: [{ color: "Red", location: new DayPilot.Date() }]
-                    });
-                }
-            }, 60000); // once per minute
-
-        if(calendarRef.current) {
             calendarRef.current.control.update({startDate, events});
-        }
         });
 
-        return () => {
-            if(slidingTimeout.current) {
-                clearInterval(slidingTimeout.current);
-            }
-        }
+        const intervalId = setInterval(() => {
+            setCalendarConfig(prevConfig => ({
+                ...prevConfig,
+                separators: [{ color: "red", location: new DayPilot.Date(), width: 2, layer: "AboveEvents"}]
+            }));
+        }, 60000); // update every minute
+        console.log('seperator:', calendarConfig.separators);
+
+        return () => clearInterval(intervalId); // cleanup on unmount
 
     }, [startDate]);
+
+    // useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //         setCalendarConfig(prevConfig => ({
+    //             ...prevConfig,
+    //             separators: [{ color: "red", location: new DayPilot.Date(), width: 2, layer: "AboveEvents"}]
+    //         }));
+    //     }, 60000); // update every minute
+    //     console.log('seperator:', calendarConfig.separators);
+    //
+    //     return () => clearInterval(intervalId); // cleanup on unmount
+    // }, []);
 
 
     return (
