@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
 import { TableContainer, TableHeader, TableRow, TableCell, TableHead, TableBody } from "../../components/Schedule/Schedule.style.js";
 import Button from "../../components/Button/Button.jsx";
-import { MissionsLayout, DeleteButton } from "./AddMissions.style.js";
+import { MissionsLayout, UtilButton } from "./AddMissions.style.js";
 import AddMissionsForm from "../../components/AddMissionsForm/AddMissionsForm.jsx";
 import { formatMissionType } from "../../components/Mission/Mission.jsx"
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
@@ -58,7 +58,7 @@ const submitMissions = async () => {
                             <TableCell>{mission.endDate}</TableCell>
                             <TableCell>{mission.soldierCount}</TableCell>
                             <TableCell>
-                                <DeleteButton onClick={() => deleteMission(index)}><DeleteRoundedIcon /></DeleteButton>
+                                <UtilButton onClick={() => deleteMission(index)}><DeleteRoundedIcon /></UtilButton>
                                 {/*<button onClick={() => editMission(index)}><EditIcon /></button>*/}
                             </TableCell>
                         </TableRow>
