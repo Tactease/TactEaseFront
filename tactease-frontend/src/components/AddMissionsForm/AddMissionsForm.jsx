@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { FormConstainer, TextFieldContainer } from "./AddMissionsForm.style";
 import Button from "../Button/Button";
 import { format } from 'date-fns';
+import moment from 'moment';
 import "./AddMissionsForm.css";
 
 const missionTypes = [
@@ -29,10 +30,38 @@ const AddMissionsForm = (props) => {
     const { setMissions, setShowForm, editMission } = props;
     const [missionData, setMissionData] = useState( editMission || {classId:40, soldiersOnMission:[]} );
     const [currentDate, setCurrentDate] = useState(format(new Date(), 'yyyy-MM-ddTHH:mm'));
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         setCurrentDate(format(new Date(), 'yyyy-MM-ddTHH:mm'));
     }, []);
+
+    const validateForm = () => {
+        let formErrors = {};
+        if(!missionData.startDate) {
+            formErrors.startDate = "Start date is required";
+        } else if (moment(missionData.startDate, 'DD/MM/YYYY HH:mm').isBefore(moment())) {
+            formErrors.startDate = "Start date cannot be in the past";
+        }
+
+        if(!missionData.endDate) {
+            formErrors.endDate = "End date is required";
+        } else if (moment(missionData.endDate, 'DD/MM/YYYY HH:mm').isBefore(moment())) {
+            formErrors.endDate = "End date cannot be in the past";
+        } else {
+            const startDate = moment(missionData.startDate, 'DD/MM/YYYY HH:mm').startOf('minute');
+            const endDate = moment(missionData.endDate, 'DD/MM/YYYY HH:mm').startOf('minute');
+            if (endDate.diff(startDate, 'minutes') < 30) {
+                formErrors.endDate = "End date should be at least 30 minutes after the start date";
+            }
+        }
+
+        if(missionData.soldierCount < 0) {
+            formErrors.soldierCount = "Soldier count is invalid";
+        }
+        setErrors(formErrors);
+        return Object.keys(formErrors).length === 0;
+    }
 
 
     const handleForm = (e) => {
@@ -49,6 +78,9 @@ const AddMissionsForm = (props) => {
 
 
     const addMission = () => {
+        if(!validateForm()) {
+            return;
+        }
         if (editMission) { // Add this block
             setMissions(prevState => prevState.map((mission, index) => index === editIndex ? missionData : mission));
         } else {
@@ -81,6 +113,8 @@ const AddMissionsForm = (props) => {
                     name="startDate"
                     variant="standard"
                     type="datetime-local"
+                    error={!!errors.startDate}
+                    helperText={errors.startDate}
                     min={currentDate}
                     onChange={(e) => handleForm(e)}
                 />
@@ -90,6 +124,8 @@ const AddMissionsForm = (props) => {
                     name="endDate"
                     variant="standard"
                     type="datetime-local"
+                    error={!!errors.endDate}
+                    helperText={errors.endDate}
                     min={currentDate}
                     onChange={(e) => handleForm(e)}
                 />
@@ -98,6 +134,8 @@ const AddMissionsForm = (props) => {
                     id="soldierCount"
                     name="soldierCount"
                     variant="standard"
+                    error={!!errors.soldierCount}
+                    helperText={errors.soldierCount}
                     type="number"
                     onChange={(e) => handleForm(e)}
                 />

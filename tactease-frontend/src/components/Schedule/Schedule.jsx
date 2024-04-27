@@ -120,8 +120,8 @@ const Calendar = () => {
             viewType: "Week",
             durationBarVisible: false,
             eventHeight: 50,
+            showCurrentTime: true,
             headerDateFormat: 'MM/dd',
-            seperators: [{ color: "red", location: new DayPilot.Date(), width: 2, layer: "AboveEvents"}],
             timeRangeSelectedHandling: user.pakal === "COMMANDER" ? "Enabled" : "Disabled",
             eventMoveHandling: user.pakal === "COMMANDER" ? "Update" : "Disabled",
             onTimeRangeSelected: async args => {
@@ -233,29 +233,7 @@ const Calendar = () => {
             calendarRef.current.control.update({startDate, events});
         });
 
-        const intervalId = setInterval(() => {
-            setCalendarConfig(prevConfig => ({
-                ...prevConfig,
-                separators: [{ color: "red", location: new DayPilot.Date(), width: 2, layer: "AboveEvents"}]
-            }));
-        }, 60000); // update every minute
-        console.log('seperator:', calendarConfig.separators);
-
-        return () => clearInterval(intervalId); // cleanup on unmount
-
     }, [startDate]);
-
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         setCalendarConfig(prevConfig => ({
-    //             ...prevConfig,
-    //             separators: [{ color: "red", location: new DayPilot.Date(), width: 2, layer: "AboveEvents"}]
-    //         }));
-    //     }, 60000); // update every minute
-    //     console.log('seperator:', calendarConfig.separators);
-    //
-    //     return () => clearInterval(intervalId); // cleanup on unmount
-    // }, []);
 
 
     return (
