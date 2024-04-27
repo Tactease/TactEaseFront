@@ -17,7 +17,8 @@ const Calendar = () => {
     const soldiersDataRef = useRef([]);
     const isLoadingRef = useRef(true);
     const [startDate, setStartDate] = useState(new Date());
-    // const today = new Date();
+    const slidingTimeout = useRef();
+
 
     useEffect(() => {
         getSoldiers().then((data) => {
@@ -229,10 +230,25 @@ const Calendar = () => {
                 soldiersOnMission: mission.soldiersOnMission
             }));
 
-        // const startDate =today.toISOString().slice(0, 10);
+            slidingTimeout.current = setInterval(() => {
+                if (calendarRef.current) {
+                    calendarRef.current.control.update({
+                        separators: [{ color: "Red", location: new DayPilot.Date() }]
+                    });
+                }
+            }, 60000); // once per minute
 
-        calendarRef.current.control.update({startDate, events});
+        if(calendarRef.current) {
+            calendarRef.current.control.update({startDate, events});
+        }
         });
+
+        return () => {
+            if(slidingTimeout.current) {
+                clearInterval(slidingTimeout.current);
+            }
+        }
+
     }, [startDate]);
 
 
@@ -243,7 +259,6 @@ const Calendar = () => {
                 <UtilButton onClick={prevWeek}><ArrowBackIosIcon /></UtilButton>
                 <UtilButton onClick={nextWeek}><ArrowForwardIosIcon /></UtilButton>
                 </ScheduleNav>
-
 
                 <DayPilotCalendar
                     {...calendarConfig}

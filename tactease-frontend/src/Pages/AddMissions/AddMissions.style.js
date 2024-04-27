@@ -10,4 +10,5 @@ export const MissionsLayout = styled.div`
 export const UtilButton = styled.button`
     border: none;
     background-color: #fff;
+    cursor: pointer;
 `
