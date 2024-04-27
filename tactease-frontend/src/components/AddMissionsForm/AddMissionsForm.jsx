@@ -27,12 +27,13 @@ const missionTypes = [
 
 const AddMissionsForm = (props) => {
     const { setMissions, setShowForm, editMission } = props;
-    const [missionData, setMissionData] = useState( editMission || {classId:40});
+    const [missionData, setMissionData] = useState( editMission || {classId:40, soldiersOnMission:[]} );
     const [currentDate, setCurrentDate] = useState(format(new Date(), 'yyyy-MM-ddTHH:mm'));
 
     useEffect(() => {
         setCurrentDate(format(new Date(), 'yyyy-MM-ddTHH:mm'));
     }, []);
+
 
     const handleForm = (e) => {
         const {name, value} = e.target;
@@ -40,7 +41,7 @@ const AddMissionsForm = (props) => {
 
         if (name === 'startDate' || name === 'endDate') {
             const date = new Date(value);
-            formattedValue = format(date, 'dd/MM/yy HH:mm');
+            formattedValue = format(date, 'dd/MM/yyyy HH:mm');
         }
 
         setMissionData(prevState => ({...prevState, [name]: formattedValue}));

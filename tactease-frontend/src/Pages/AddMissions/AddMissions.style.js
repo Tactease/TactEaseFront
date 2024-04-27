@@ -7,7 +7,8 @@ export const MissionsLayout = styled.div`
     width: 100%;
 `;
 
-export const DeleteButton = styled.button`
+export const UtilButton = styled.button`
     border: none;
     background-color: #fff;
+    cursor: pointer;
 `

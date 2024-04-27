@@ -57,3 +57,10 @@ export const MissionInfoContainer = styled.div`
     flex-direction: column;
     width: 100%;
     `;
+
+export const ScheduleNav = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+`;

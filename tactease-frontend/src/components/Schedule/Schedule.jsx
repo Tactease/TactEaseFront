@@ -5,7 +5,10 @@ import "./schedule.style.css"
 import { convertToISO, formatTime, getMissionColor, formatMissionType, formatDate, formatMissionDate } from '../Mission/Mission.jsx';
 import { getMissions, createMission, deleteMission, updateMission } from '../../API/missions.api.js';
 import { getSoldiers, getSoldierById } from "../../API/soldiers.api.js";
-import {TableContainer, TableHeader, TableRow, TableCell, TableHead, TableBody, MissionInfo, MissionInfoContainer} from './Schedule.style.js';
+import {TableContainer, TableHeader, TableRow, TableCell, TableHead, TableBody, MissionInfo, MissionInfoContainer, ScheduleNav} from './Schedule.style.js';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { UtilButton } from '../../Pages/AddMissions/AddMissions.style.js';
 
 
 const Calendar = () => {
@@ -13,6 +16,9 @@ const Calendar = () => {
     const calendarRef = useRef()
     const soldiersDataRef = useRef([]);
     const isLoadingRef = useRef(true);
+    const [startDate, setStartDate] = useState(new Date());
+    const slidingTimeout = useRef();
+
 
     useEffect(() => {
         getSoldiers().then((data) => {
@@ -20,6 +26,17 @@ const Calendar = () => {
             isLoadingRef.current = false;
         });
     }, []);
+
+    console.log('startDate:', startDate);
+
+    const nextWeek = () => {
+        setStartDate(prevDate => new DayPilot.Date(prevDate).addDays(7));
+    }
+
+    const prevWeek = () => {
+        setStartDate(prevDate => new DayPilot.Date(prevDate).addDays(-7));
+    }
+
 
     const reviewEvent = async (e) => {
         let loadingInfo = '<p>Loading soldiers data...</p>';
@@ -213,23 +230,42 @@ const Calendar = () => {
                 soldiersOnMission: mission.soldiersOnMission
             }));
 
-        const startDate = "2024-02-12";
+            slidingTimeout.current = setInterval(() => {
+                if (calendarRef.current) {
+                    calendarRef.current.control.update({
+                        separators: [{ color: "Red", location: new DayPilot.Date() }]
+                    });
+                }
+            }, 60000); // once per minute
 
-        calendarRef.current.control.update({startDate, events});
+        if(calendarRef.current) {
+            calendarRef.current.control.update({startDate, events});
+        }
         });
-    }, []);
+
+        return () => {
+            if(slidingTimeout.current) {
+                clearInterval(slidingTimeout.current);
+            }
+        }
+
+    }, [startDate]);
 
 
     return (
         <div className="wrap">
-             <main>
+            <main>
+                <ScheduleNav>
+                <UtilButton onClick={prevWeek}><ArrowBackIosIcon /></UtilButton>
+                <UtilButton onClick={nextWeek}><ArrowForwardIosIcon /></UtilButton>
+                </ScheduleNav>
 
                 <DayPilotCalendar
                     {...calendarConfig}
                     ref={calendarRef}
                 />
-             </main>
-         </div>
+            </main>
+        </div>
     );
 }
 
