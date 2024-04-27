@@ -34,13 +34,14 @@ const AddMissionsForm = (props) => {
         setCurrentDate(format(new Date(), 'yyyy-MM-ddTHH:mm'));
     }, []);
 
+
     const handleForm = (e) => {
         const {name, value} = e.target;
         let formattedValue = value;
 
         if (name === 'startDate' || name === 'endDate') {
             const date = new Date(value);
-            formattedValue = format(date, 'dd/MM/yy HH:mm');
+            formattedValue = format(date, 'dd/MM/yyyy HH:mm');
         }
 
         setMissionData(prevState => ({...prevState, [name]: formattedValue}));

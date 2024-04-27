@@ -7,6 +7,7 @@ import AddMissionsForm from "../../components/AddMissionsForm/AddMissionsForm.js
 import { formatMissionType } from "../../components/Mission/Mission.jsx"
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import {createMission} from "../../API/missions.api.js";
+import { useNavigate } from 'react-router-dom';
 // import EditIcon from '@mui/icons-material/Edit';
 
 const AddMissons = () => {
@@ -14,6 +15,7 @@ const AddMissons = () => {
 const [missions, setMissions] = useState([]);
 const [showForm, setShowForm] = useState(false);
 // const [editIndex, setEditIndex] = useState(null);
+const navigate = useNavigate();
 
 const deleteMission = (index) => {
     const newMissions = missions.filter((mission, i) => i !== index);
@@ -23,7 +25,11 @@ const deleteMission = (index) => {
 const submitMissions = async () => {
         console.log("missions", missions)
         await createMission(missions)
-        .then((res => {console.log("new missions created", res)}))
+        .then((res => {
+            console.log("new missions created", res);
+            navigate('/')}))
+        .catch((err) => console.log(err))
+
     }
 
 // const editMission = (index) => { // Add this function

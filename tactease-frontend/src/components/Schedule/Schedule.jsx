@@ -13,6 +13,7 @@ const Calendar = () => {
     const calendarRef = useRef()
     const soldiersDataRef = useRef([]);
     const isLoadingRef = useRef(true);
+    const today = new Date();
 
     useEffect(() => {
         getSoldiers().then((data) => {
@@ -213,7 +214,7 @@ const Calendar = () => {
                 soldiersOnMission: mission.soldiersOnMission
             }));
 
-        const startDate = "2024-02-12";
+        const startDate =today.toISOString().slice(0, 10);
 
         calendarRef.current.control.update({startDate, events});
         });
