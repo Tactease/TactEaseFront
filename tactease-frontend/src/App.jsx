@@ -4,10 +4,10 @@ import CalenderPage from './Pages/CalenderPage/CalenderPage.jsx';
 import Login from "./Pages/Login/Login.jsx";
 import AddMissions from "./Pages/AddMissions/AddMissions.jsx";
 import {Route, Routes, useNavigate} from 'react-router-dom'
+import Requests from "./Pages/Requests/Requests.jsx";
 
 function App() {
     const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-    console.log("User value:", user); // Log the user value
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,6 +27,9 @@ function App() {
                 <Route path="/login" element={<Login/>}/>
                 <Route exact path="/" element={<CalenderPage/>}/>
                 <Route path="/addMissions" element={<AddMissions/>}/>
+                {/*<Route path="/newRequest" element={</>}/>*/}
+                <Route path="/myRequests" element={<Requests />}/>
+                {/*<Route path="/soldiersRequests" element={</>}/>*/}
             </Routes>
         </div>
     );

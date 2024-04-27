@@ -34,7 +34,7 @@ const Login = () => {
     }
 
     const validatePassword = (value) => {
-        if (value.length == 0) {
+        if (value.length === 0) {
             setPasswordErr(true);
             setPasswordMsg("No password has been entered.");
         }
