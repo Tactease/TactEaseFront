@@ -8,7 +8,7 @@ const Navbar = ({}) => {
         <NavigateStyle>
             <UlStyle>
                 <LiStyle>Home</LiStyle>
-                <Link to={"/myRequests"}>
+                <Link to={"/newRequest"}>
                 <LiStyle>Requests</LiStyle>
                 </Link>
             </UlStyle>

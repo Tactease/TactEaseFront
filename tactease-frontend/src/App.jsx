@@ -5,6 +5,7 @@ import Login from "./Pages/Login/Login.jsx";
 import AddMissions from "./Pages/AddMissions/AddMissions.jsx";
 import {Route, Routes, useNavigate} from 'react-router-dom'
 import Requests from "./Pages/Requests/Requests.jsx";
+import NewRequest from "./Pages/NewRequest/NewRequest.jsx";
 
 function App() {
     const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/login" element={<Login/>}/>
                 <Route exact path="/" element={<CalenderPage/>}/>
                 <Route path="/addMissions" element={<AddMissions/>}/>
+                <Route path="/newRequest" element={<NewRequest/>}/>
                 {/*<Route path="/newRequest" element={</>}/>*/}
                 <Route path="/myRequests" element={<Requests />}/>
                 {/*<Route path="/soldiersRequests" element={</>}/>*/}
