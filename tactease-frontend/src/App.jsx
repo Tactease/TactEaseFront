@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import Header from './components/Header/Header.jsx';
 import CalenderPage from './Pages/CalenderPage/CalenderPage.jsx';
 import Login from "./Pages/Login/Login.jsx";
@@ -7,6 +8,11 @@ import Requests from "./Pages/Requests/Requests.jsx";
 
 function App() {
     const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+        }
+    }, [user]);
 
     return (
         <div className="App">
