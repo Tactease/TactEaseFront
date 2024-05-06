@@ -4,9 +4,16 @@ import Login from "./Pages/Login/Login.jsx";
 import AddMissions from "./Pages/AddMissions/AddMissions.jsx";
 import {Route, Routes, Navigate} from 'react-router-dom'
 import Requests from "./Pages/Requests/Requests.jsx";
+import {useEffect} from "react";
 
 function App() {
     const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+        }
+    }, [user]);
 
     return (
         <div className="App">
