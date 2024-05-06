@@ -1,4 +1,3 @@
-import {useEffect} from 'react';
 import Header from './components/Header/Header.jsx';
 import CalenderPage from './Pages/CalenderPage/CalenderPage.jsx';
 import Login from "./Pages/Login/Login.jsx";
@@ -15,12 +14,6 @@ function App() {
         }
     }, [user]);
 
-    useEffect(() => {
-        if (user) {
-            console.log(user);
-        }
-    }, [user]);
-
     return (
         <div className="App">
             <Header/>
@@ -29,7 +22,7 @@ function App() {
                 <Route exact path="/" element={user ? <CalenderPage/> : <Navigate to="/login"/>}/>
                 <Route path="/addMissions" element={user ? <AddMissions/> : <Navigate to="/login"/>}/>
                 {/*<Route path="/newRequest" element={</>}/>*/}
-                <Route path="/myRequests" element={user? <Requests/> : <Navigate to="/login" />}/>
+                <Route path="/requests" element={user? <Requests/> : <Navigate to="/login" />}/>
                 {/*<Route path="/soldiersRequests" element={</>}/>*/}
             </Routes>
         </div>

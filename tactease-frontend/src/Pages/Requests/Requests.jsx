@@ -16,6 +16,7 @@ const Requests = () => {
         { field: 'note', headerName: 'Note', flex: 1, align: 'center', headerAlign: 'center' },
         { field: 'status', headerName: 'Status', flex: 1, align: 'center', headerAlign: 'center' }
     ];
+    const [title, setTitle] = useState('My Requests');
 
     useEffect(() => {
         getRequestsOfSoldier(user._id.toString()).then((data) => {
