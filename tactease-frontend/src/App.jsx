@@ -24,7 +24,9 @@ function App() {
                 <Route exact path="/" element={user ? <CalenderPage/> : <Navigate to="/login"/>}/>
                 <Route path="/addMissions" element={user ? <AddMissions/> : <Navigate to="/login"/>}/>
                 {/*<Route path="/newRequest" element={</>}/>*/}
-                <Route path="/myRequests" element={user? <Requests/> : <Navigate to="/login" />}/>
+                <Route path="/myRequests" element={user? <Requests/> : <Navigate to="/login"/>}/>
+                <Route path="/newRequest" element={user? <NewRequest/> : <Navigate to="/login"/>}/>
+
                 {/*<Route path="/soldiersRequests" element={</>}/>*/}
             </Routes>
         </div>
