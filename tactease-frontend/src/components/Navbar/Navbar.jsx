@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {  NavigateStyle, UlStyle, LiStyle } from './Navbar.style';
+import {Link} from "react-router-dom";
 
 
 const Navbar = ({}) => {
@@ -7,7 +8,9 @@ const Navbar = ({}) => {
         <NavigateStyle>
             <UlStyle>
                 <LiStyle>Home</LiStyle>
+                <Link to={"/myRequests"}>
                 <LiStyle>Requests</LiStyle>
+                </Link>
             </UlStyle>
         </NavigateStyle>
     );
