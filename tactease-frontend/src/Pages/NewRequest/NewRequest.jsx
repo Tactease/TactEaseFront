@@ -50,9 +50,7 @@ const NewRequest = () => {
         setErrors(formErrors);
         return Object.keys(formErrors).length === 0;
     }
-
-    console.log("requestData", requestData);
-
+    
 
     const handleForm = (e) => {
         const {name, value} = e.target;
@@ -65,14 +63,12 @@ const NewRequest = () => {
 
         setRequestData(prevState => ({...prevState, [name]: formattedValue}));
     }
-            console.log("user id", userId);
+
     const addRequest = async (e) => {
         e.preventDefault();
         if (!validateForm()) {
-            console.log("not valid", errors);
             return;
         }
-            console.log("inside create Request", requestData);
         await createRequest(userId,requestData)
             .then((res => {
                 console.log("new request added", res);
