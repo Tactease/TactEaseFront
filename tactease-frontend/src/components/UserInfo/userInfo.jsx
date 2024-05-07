@@ -95,7 +95,7 @@ const UserInfo = () => {
                             <ListItemIcon>
                                 <QuestionAnswerIcon />
                             </ListItemIcon>
-                            <Link to={"/myRequests"}>
+                            <Link to={"/requests"}>
                                 Requests
                             </Link>
                         </MenuItem>

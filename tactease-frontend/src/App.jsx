@@ -8,7 +8,6 @@ import {useEffect} from "react";
 
 function App() {
     const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-
     useEffect(() => {
         if (user) {
             console.log(user);
@@ -23,7 +22,7 @@ function App() {
                 <Route exact path="/" element={user ? <CalenderPage/> : <Navigate to="/login"/>}/>
                 <Route path="/addMissions" element={user ? <AddMissions/> : <Navigate to="/login"/>}/>
                 {/*<Route path="/newRequest" element={</>}/>*/}
-                <Route path="/myRequests" element={user? <Requests/> : <Navigate to="/login" />}/>
+                <Route path="/requests" element={user? <Requests/> : <Navigate to="/login" />}/>
                 {/*<Route path="/soldiersRequests" element={</>}/>*/}
             </Routes>
         </div>
