@@ -17,6 +17,7 @@ const Requests = () => {
         { field: 'note', headerName: 'Note', flex: 1, align: 'center', headerAlign: 'center' },
         { field: 'status', headerName: 'Status', flex: 1, align: 'center', headerAlign: 'center' }
     ];
+    const [pageTitle, setTitle] = useState(user.pakal !== "COMMANDER" ? "My Requests" : "Soldiers Requests");
 
     useEffect(() => {
         getRequestsOfSoldier(user._id.toString()).then((data) => {
@@ -38,7 +39,7 @@ const Requests = () => {
 
     return (
         <RequestsContainer>
-            <PageTitle title="My Requests" />
+            <PageTitle title={pageTitle} />
             <RequestsDataGrid>
                 <Box sx={{ width: '100%' }}>
                     <DataGrid
