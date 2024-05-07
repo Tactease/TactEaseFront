@@ -24,8 +24,10 @@ const requestsTypes = [
 const NewRequest = () => {
     const [currentDate, setCurrentDate] = useState(format(new Date(), 'yyyy-MM-ddTHH:mm'));
     const [errors, setErrors] = useState({});
-    const [requestData, setRequestData] = useState({});
+    const [requestData, setRequestData] = useState({requestType: 'PERSONAL_REQUEST', status: 'Pending'});
     const navigate = useNavigate();
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+    const userId = user._id.toString();
 
     const validateForm = () => {
         let formErrors = {};
@@ -49,16 +51,8 @@ const NewRequest = () => {
         return Object.keys(formErrors).length === 0;
     }
 
-    const addRequest = async () => {
-        if (!validateForm()) {
-            return;
-        }
-        await createRequest(requestData)
-            .then((res => {
-                console.log("new request added", res);
-                navigate('/')}))
-            .catch((err) => console.log(err))
-    }
+    console.log("requestData", requestData);
+
 
     const handleForm = (e) => {
         const {name, value} = e.target;
@@ -70,6 +64,20 @@ const NewRequest = () => {
         }
 
         setRequestData(prevState => ({...prevState, [name]: formattedValue}));
+    }
+            console.log("user id", userId);
+    const addRequest = async (e) => {
+        e.preventDefault();
+        if (!validateForm()) {
+            console.log("not valid", errors);
+            return;
+        }
+            console.log("inside create Request", requestData);
+        await createRequest(userId,requestData)
+            .then((res => {
+                console.log("new request added", res);
+                navigate('/myRequests');}))
+            .catch((err) => console.log(err))
     }
     return (
         <div>
@@ -83,6 +91,7 @@ const NewRequest = () => {
                     select
                     variant="standard"
                     style={{width: '10%'}}
+                    value={requestData.requestType} // set value prop to state value
                     onChange={(e) => handleForm(e)}
                 >
                     {requestsTypes.map((option) => (
@@ -92,11 +101,10 @@ const NewRequest = () => {
                     ))}
                 </TextField>
                 <TextField
-                    required
+                    // required
                     id="startDate"
                     name="startDate"
-                    // label="Start Date"
-                    // placeholder="dd/MM/yyyy HH:mm"
+                    label=" "
                     variant="standard"
                     type="datetime-local"
                     error={!!errors.startDate}
@@ -105,10 +113,10 @@ const NewRequest = () => {
                     onChange={(e) => handleForm(e)}
                 />
                 <TextField
-                    required
+                    // required
                     id="endDate"
                     name="endDate"
-                    // label="End Date"
+                    label=" "
                     // placeholder="dd/MM/yyyy HH:mm"
                     variant="standard"
                     type="datetime-local"
@@ -125,7 +133,7 @@ const NewRequest = () => {
                     type="text"
                     onChange={(e) => handleForm(e)}
                 />
-                <Button width={85} text={'Submit'} onClick={addRequest} disabled={
+                <Button width={85} text={'Submit'} onClick={(e) => addRequest(e)} disabled={
                     !requestData.requestType || !requestData.startDate || !requestData.endDate || !requestData.note
                 }></Button>
             </RequestForm>
