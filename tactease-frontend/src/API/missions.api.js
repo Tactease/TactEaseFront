@@ -7,6 +7,10 @@ export const getMissions = async () => {
     return await axios.get(`${renderURL}/missions`);
 }
 
+export const getClassMissions = async (classId) => {
+    return await axios.get(`${renderURL}/missions/list/${classId}`);
+}
+
 export const getMissionById = async (missionId) => {
     return await axios.get(`${renderURL}/missions/${missionId}`);
 }

@@ -8,13 +8,11 @@ import { formatMissionType } from "../../components/Mission/Mission.jsx"
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import {createMission} from "../../API/missions.api.js";
 import { useNavigate } from 'react-router-dom';
-// import EditIcon from '@mui/icons-material/Edit';
 
 const AddMissons = () => {
 
 const [missions, setMissions] = useState([]);
 const [showForm, setShowForm] = useState(false);
-// const [editIndex, setEditIndex] = useState(null);
 const navigate = useNavigate();
 
 const deleteMission = (index) => {
@@ -31,11 +29,6 @@ const submitMissions = async () => {
         .catch((err) => console.log(err))
 
     }
-
-// const editMission = (index) => { // Add this function
-//     setEditIndex(index);
-//     setShowForm(true);
-// }
 
     return (
         <MissionsLayout>
@@ -59,7 +52,6 @@ const submitMissions = async () => {
                             <TableCell>{mission.soldierCount}</TableCell>
                             <TableCell>
                                 <UtilButton onClick={() => deleteMission(index)}><DeleteRoundedIcon /></UtilButton>
-                                {/*<button onClick={() => editMission(index)}><EditIcon /></button>*/}
                             </TableCell>
                         </TableRow>
                     ))}

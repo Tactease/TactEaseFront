@@ -3,7 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 import "./schedule.style.css"
 import { convertToISO, formatTime, getMissionColor, formatMissionType, formatDate, formatMissionDate } from '../Mission/Mission.jsx';
-import { getMissions, createMission, deleteMission, updateMission } from '../../API/missions.api.js';
+import { getMissions, createMission, deleteMission, updateMission, getClassMissions } from '../../API/missions.api.js';
 import { getSoldiers, getSoldierById } from "../../API/soldiers.api.js";
 import {TableContainer, TableHeader, TableRow, TableCell, TableHead, TableBody, MissionInfo, MissionInfoContainer, ScheduleNav} from './Schedule.style.js';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -90,7 +90,7 @@ const Calendar = () => {
                 {id: "WATCH" , name: "Watch"},
                 {id: "GUARD" , name: "Guard"}
             ],
-            value: e.data.missionType // Set the current value
+            value: e.data.missionType
         },
             {
                 name:"Soldier Count",
@@ -144,7 +144,7 @@ const Calendar = () => {
                     return;
                 }
                 const newMission = {
-                    classId: 40,
+                    classId: user.depClass.classId,
                     missionType: modal.result.missionType,
                     soldierCount: modal.result.soldierCount,
                     startDate: formatMissionDate(args.start.value.toString()),
@@ -214,7 +214,7 @@ const Calendar = () => {
     });
 
     useEffect(() => {
-        getMissions().then((missionsData) => {
+        getClassMissions(user.depClass.classId).then((missionsData) => {
             let filteredMissions = missionsData.data;
             if (user.pakal !== "COMMANDER") {
                 filteredMissions = filteredMissions.filter(mission => mission.soldiersOnMission.includes(user.personalNumber));

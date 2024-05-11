@@ -28,7 +28,8 @@ const missionTypes = [
 
 const AddMissionsForm = (props) => {
     const { setMissions, setShowForm, editMission } = props;
-    const [missionData, setMissionData] = useState( editMission || {classId:40, soldiersOnMission:[]} );
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+    const [missionData, setMissionData] = useState( editMission || {classId:user.depClass.classId, soldiersOnMission:[]} );
     const [currentDate, setCurrentDate] = useState(format(new Date(), 'yyyy-MM-ddTHH:mm'));
     const [errors, setErrors] = useState({});
 
