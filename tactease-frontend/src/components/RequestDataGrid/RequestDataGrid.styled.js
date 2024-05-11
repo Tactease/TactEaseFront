@@ -15,3 +15,22 @@ export const StatusCell = styled.div`
     }};
     font-weight: 500;
 `;
+
+export const TableHeaderCell = styled.span`
+    font-weight: 600;
+    font-size: 1.05rem;
+`;
+
+export const SecondTableHeader = styled.h2`
+font-size: 1rem;
+
+text-align: center;
+    font-weight: 500;
+`;
+
+export const RequestsFormContainer = styled.div`
+    display: flex;
+    flex-flow: column;
+    margin: 15px 0px;
+    gap: 15px;
+`;

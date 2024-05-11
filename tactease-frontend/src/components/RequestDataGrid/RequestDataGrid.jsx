@@ -1,13 +1,21 @@
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
-import {useEffect, useState} from "react";
-import {getRequestsOfSoldier} from "../../API/requests.api.js";
+import { useEffect, useState } from "react";
+import { getRequestsOfSoldier } from "../../API/requests.api.js";
 import { formatMissionType } from "../Request/Request.jsx";
 import { StatusCell } from "./RequestDataGrid.styled.js";
+import ApproveRequestForm from "./ApproveRequestForm.jsx";
 
 // eslint-disable-next-line react/prop-types
-const RequestDataGrid = ({ user, columns }) => {
+const RequestDataGrid = ({ user }) => {
     const [requests, setRequests] = useState([]);
+    const columns = [
+        { field: 'requestType', headerName: 'Request Type', flex: 1, align: 'center', headerAlign: 'center' },
+        { field: 'hours', headerName: 'Hours', flex: 1, align: 'center', headerAlign: 'center' },
+        { field: 'dates', headerName: 'Dates', flex: 1, align: 'center', headerAlign: 'center' },
+        { field: 'note', headerName: 'Note', flex: 1, align: 'center', headerAlign: 'center' },
+        { field: 'status', headerName: 'Status', flex: 1, align: 'center', headerAlign: 'center' }
+    ];
 
     useEffect(() => {
         getRequestsOfSoldier(user._id.toString()).then((data) => {
@@ -25,27 +33,37 @@ const RequestDataGrid = ({ user, columns }) => {
             }
             setRequests(req);
         });
+
     }, []);
+
+
+    const renderCell = (params) => {
+        if (params.field === 'status' && params.value === 'Pending') {
+            return <ApproveRequestForm user={user} req={params.row} />;
+        } else {
+            return <StatusCell status={params.value}>{params.value}</StatusCell>;
+        }
+    };
+    
+
+    const modifiedColumns = columns.map(column => {
+        if (column.field === 'status') {
+            return {
+                ...column,
+                renderCell: renderCell
+            };
+        }
+        return column;
+    });
 
     return (
         <Box sx={{ width: '100%' }}>
-        <DataGrid
-            columns={columns.map(column => {
-                if (column.field === 'status') {
-                    return {
-                        ...column,
-                        renderCell: (params) => (
-                            <StatusCell status={params.value}>{params.value}</StatusCell>
-                        )
-                    };
-                }
-                return column;
-            })}
-            rows={requests}
-            autoHeight
-            autoPageSize
-        />
-    </Box>
+            <DataGrid
+                columns={modifiedColumns}
+                rows={requests}
+                autoHeight
+            />
+        </Box>
     );
 };
 

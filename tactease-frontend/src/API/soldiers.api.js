@@ -12,6 +12,10 @@ export const getSoldierById = async (soldierId) => {
     return await axios.get(`${renderURL}/soldiers/${soldierId}`);
 }
 
+export const getSoldierByClassId = async (classId) => {
+    return await axios.get(`${renderURL}/soldiers/list/${classId}`);
+}
+
 export const createSoldier = async (soldier) => {
     return await axios.post(`${renderURL}/soldiers`, soldier);
 }
