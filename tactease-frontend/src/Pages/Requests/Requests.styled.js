@@ -22,7 +22,7 @@ export const StatusCell = styled.div`
                 return '#9489D6';
             case 'Approved':
                 return '#6BD0A0';
-            case 'Declined':
+            case 'Rejected':
                 return '#FD6868';
             default:
                 return 'inherit';
