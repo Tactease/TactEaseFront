@@ -1,15 +1,20 @@
-import { DataGrid } from '@mui/x-data-grid';
-import Box from '@mui/material/Box';
-import {useEffect, useState} from "react";
-import {getRequestsOfSoldier} from "../../API/requests.api.js";
-import { formatMissionType } from "../Request/Request.jsx";
-import { StatusCell } from "./RequestDataGrid.styled.js";
+import { ApproveFormContainter } from './RequestDataGrid.styled.js';
+import ClearIcon from '@mui/icons-material/Clear';
+import CheckIcon from '@mui/icons-material/Check';
+import IconButton from '@mui/material/IconButton';
 
 // eslint-disable-next-line react/prop-types
 const ApproveRequestForm = (user, req) => {
 
-    return(
-        <span>meep</span>
+    return (
+        <ApproveFormContainter>
+            <IconButton aria-label="reject"> 
+                <ClearIcon />
+            </IconButton>
+            <IconButton aria-label="approve"> 
+                <CheckIcon />
+            </IconButton>
+        </ApproveFormContainter>
     );
 };
 

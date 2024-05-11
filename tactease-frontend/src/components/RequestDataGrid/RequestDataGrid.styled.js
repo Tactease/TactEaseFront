@@ -34,3 +34,9 @@ export const RequestsFormContainer = styled.div`
     margin: 15px 0px;
     gap: 15px;
 `;
+
+export const ApproveFormContainter = styled.div`
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+`;
