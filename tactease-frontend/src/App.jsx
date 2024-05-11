@@ -4,6 +4,7 @@ import Login from "./Pages/Login/Login.jsx";
 import AddMissions from "./Pages/AddMissions/AddMissions.jsx";
 import {Route, Routes, Navigate} from 'react-router-dom'
 import Requests from "./Pages/Requests/Requests.jsx";
+import NewRequest from "./Pages/NewRequest/NewRequest.jsx";
 import {useEffect} from "react";
 
 function App() {
@@ -22,7 +23,9 @@ function App() {
                 <Route exact path="/" element={user ? <CalenderPage/> : <Navigate to="/login"/>}/>
                 <Route path="/addMissions" element={user ? <AddMissions/> : <Navigate to="/login"/>}/>
                 {/*<Route path="/newRequest" element={</>}/>*/}
-                <Route path="/requests" element={user? <Requests/> : <Navigate to="/login" />}/>
+                <Route path="/requests" element={user? <Requests/> : <Navigate to="/login"/>}/>
+                <Route path="/newRequest" element={user? <NewRequest/> : <Navigate to="/login"/>}/>
+
                 {/*<Route path="/soldiersRequests" element={</>}/>*/}
             </Routes>
         </div>
