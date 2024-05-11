@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { FormConstainer, TextFieldContainer } from "./AddMissionsForm.style";
+import {AddButton, FormConstainer, TextFieldContainer} from "./AddMissionsForm.style";
 import Button from "../Button/Button";
 import { format } from 'date-fns';
 import moment from 'moment';
 import "./AddMissionsForm.css";
+import {
+    GridContainer,
+    GridMissionType,
+    GridStartDate,
+    GridEndDate,
+    GridParticipants } from "../../Pages/AddMissions/AddMissions.style.js";
 
 const missionTypes = [
     {
@@ -92,14 +98,14 @@ const AddMissionsForm = (props) => {
 
     return(
             <FormConstainer>
-                <TextFieldContainer>
+                    <GridContainer>
+                    <GridMissionType>
                 <TextField
                     required
                     id="missionType"
                     name="missionType"
                     select
                     variant="standard"
-                    style={{width: '10%'}}
                     onChange={(e) => handleForm(e)}
                 >
                     {missionTypes.map((option) => (
@@ -108,6 +114,8 @@ const AddMissionsForm = (props) => {
                         </MenuItem>
                     ))}
                 </TextField>
+                    </GridMissionType>
+                    <GridStartDate>
                 <TextField
                     required
                     id="startDate"
@@ -119,6 +127,8 @@ const AddMissionsForm = (props) => {
                     min={currentDate}
                     onChange={(e) => handleForm(e)}
                 />
+                    </GridStartDate>
+                    <GridEndDate>
                 <TextField
                     required
                     id="endDate"
@@ -130,6 +140,8 @@ const AddMissionsForm = (props) => {
                     min={currentDate}
                     onChange={(e) => handleForm(e)}
                 />
+                    </GridEndDate>
+                    <GridParticipants>
                 <TextField
                     required
                     id="soldierCount"
@@ -140,10 +152,13 @@ const AddMissionsForm = (props) => {
                     type="number"
                     onChange={(e) => handleForm(e)}
                 />
-                </TextFieldContainer>
+                    </GridParticipants>
+                    </GridContainer>
+                <AddButton>
                 <Button width={85} text={'Add'} onClick={addMission} disabled={
                     !missionData.missionType || !missionData.startDate || !missionData.endDate || !missionData.soldierCount
                 }></Button>
+                </AddButton>
             </FormConstainer>
     )
 }

@@ -1,6 +1,18 @@
 import { useState } from 'react';
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
-import { TableContainer, TableHeader, TableRow, TableCell, TableHead, TableBody } from "../../components/Schedule/Schedule.style.js";
+// import { TableContainer, TableHeader, TableRow, TableCell, TableHead, TableBody } from "../../components/Schedule/Schedule.style.js";
+import {
+    GridContainer,
+    GridMissionType,
+    GridStartDate,
+    GridEndDate,
+    GridParticipants,
+    GridDelete,
+    GridForm,
+    GridHeader,
+    GridAdd,
+    GridMission, ButtonPosition
+} from "./AddMissions.style.js";
 import Button from "../../components/Button/Button.jsx";
 import { MissionsLayout, UtilButton } from "./AddMissions.style.js";
 import AddMissionsForm from "../../components/AddMissionsForm/AddMissionsForm.jsx";
@@ -33,41 +45,45 @@ const submitMissions = async () => {
     return (
         <MissionsLayout>
             <PageTitle title="Add Missions"/>
-            <TableContainer>
-                <TableHead>
-                    <TableRow>
-                        <TableHeader>Mission Type</TableHeader>
-                        <TableHeader>Start Date</TableHeader>
-                        <TableHeader>End Date</TableHeader>
-                        <TableHeader>Participants</TableHeader>
-                        <TableHeader></TableHeader>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
+            <GridContainer>
+                {/*<TableHead>*/}
+                {/*    <TableRow>*/}
+                <GridHeader>
+                        <GridMissionType>Mission Type</GridMissionType>
+                        <GridStartDate>Start Date</GridStartDate>
+                        <GridEndDate>End Date</GridEndDate>
+                        <GridParticipants>Participants</GridParticipants>
+                        <GridDelete></GridDelete>
+                </GridHeader>
+                    {/*</TableRow>*/}
+                {/*</TableHead>*/}
+                {/*<TableBody>*/}
                     {missions.map((mission, index) => (
-                        <TableRow key={index}>
-                            <TableCell>{formatMissionType(mission.missionType)}</TableCell>
-                            <TableCell>{mission.startDate}</TableCell>
-                            <TableCell>{mission.endDate}</TableCell>
-                            <TableCell>{mission.soldierCount}</TableCell>
-                            <TableCell>
+                        <GridMission key={index}>
+                            <GridMissionType>{formatMissionType(mission.missionType)}</GridMissionType>
+                            <GridStartDate>{mission.startDate}</GridStartDate>
+                            <GridEndDate>{mission.endDate}</GridEndDate>
+                            <GridParticipants>{mission.soldierCount}</GridParticipants>
+                            <GridDelete>
                                 <UtilButton onClick={() => deleteMission(index)}><DeleteRoundedIcon /></UtilButton>
-                            </TableCell>
-                        </TableRow>
+                            </GridDelete>
+                        </GridMission>
                     ))}
                     {showForm ? (
-                        <TableRow>
+                        <GridForm>
                             <AddMissionsForm setShowForm={setShowForm} setMissions={setMissions} />
-                        </TableRow>
+                        </GridForm>
                     ) : (
                         missions.length < 6 ? (
-                            <TableRow><Button text="+" width={50} onClick={()=> setShowForm(true)}/></TableRow>
+                            <GridAdd><Button text="+" width={50} onClick={()=> setShowForm(true)}/></GridAdd>
                                 ) : null
 
                     )}
-                </TableBody>
-            </TableContainer>
+                {/*</TableBody>*/}
+            </GridContainer>
+            <ButtonPosition>
             <Button text="Send Missions" width={150} onClick={submitMissions} disabled={missions.length === 0}/>
+            </ButtonPosition>
         </MissionsLayout>
     )
 }
