@@ -15,8 +15,3 @@ export const TextFieldContainer = styled.div`
     width: 100%;
 `;
 
-export const AddButton = styled.div`
-position: relative;
-    top: 8%;
-    left: 8%;
-`

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
-// import { TableContainer, TableHeader, TableRow, TableCell, TableHead, TableBody } from "../../components/Schedule/Schedule.style.js";
 import {
     GridContainer,
     GridMissionType,
@@ -9,7 +8,6 @@ import {
     GridParticipants,
     GridDelete,
     GridForm,
-    GridHeader,
     GridAdd,
     GridMission, ButtonPosition
 } from "./AddMissions.style.js";
@@ -46,18 +44,11 @@ const submitMissions = async () => {
         <MissionsLayout>
             <PageTitle title="Add Missions"/>
             <GridContainer>
-                {/*<TableHead>*/}
-                {/*    <TableRow>*/}
-                <GridHeader>
-                        <GridMissionType>Mission Type</GridMissionType>
-                        <GridStartDate>Start Date</GridStartDate>
-                        <GridEndDate>End Date</GridEndDate>
-                        <GridParticipants>Participants</GridParticipants>
+                        <GridMissionType isHeader={true}>Mission Type</GridMissionType>
+                        <GridStartDate isHeader={true}>Start Date</GridStartDate>
+                        <GridEndDate isHeader={true}>End Date</GridEndDate>
+                        <GridParticipants isHeader={true}>Participants</GridParticipants>
                         <GridDelete></GridDelete>
-                </GridHeader>
-                    {/*</TableRow>*/}
-                {/*</TableHead>*/}
-                {/*<TableBody>*/}
                     {missions.map((mission, index) => (
                         <GridMission key={index}>
                             <GridMissionType>{formatMissionType(mission.missionType)}</GridMissionType>
@@ -79,7 +70,6 @@ const submitMissions = async () => {
                                 ) : null
 
                     )}
-                {/*</TableBody>*/}
             </GridContainer>
             <ButtonPosition>
             <Button text="Send Missions" width={150} onClick={submitMissions} disabled={missions.length === 0}/>

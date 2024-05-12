@@ -15,95 +15,60 @@ export const UtilButton = styled.button`
 
 export const GridContainer = styled.div`
     display: grid;
-    //grid-template-columns: repeat(5, 20%);
     grid-template-columns: 20% 20% 20% 20% 20%;
-    grid-auto-rows: 25%;
-    grid-template-areas: "missionType" "startDate" "endDate" "participants" "delete" 
-    //"missionType startDate endDate participants delete" "missionType startDate endDate participants delete" "missionType startDate endDate participants delete" "missionType startDate endDate participants delete" "missionType startDate endDate participants delete"
-    ". . add . ." ;
+    grid-template-rows: auto;
+    //grid-template-rows: 25% 25% 25% 25% 25% 25% 25%;
     width: 80vw;
 `
 
 export const GridMissionType = styled.div`
-    grid-area: missionType;
-    //grid-column-start: 1;
-    //grid-column-end: 1;
-    //grid-row-start: 1;
-    //grid-row-end: 1;
+    grid-row: 1;
+    grid-column: 1;
     align-items: center;
     justify-self: center;
     justify-content: center;
-    display: grid;
+    font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
     `
 export const GridStartDate = styled.div`
-    grid-area: startDate;
-    //grid-column-start: 2;
-    //grid-column-end: 2;
-    //grid-row-start: 1;
-    //grid-row-end: 1;
+    grid-row: span 1;
+    grid-column: 2;
     justify-self: center;
     align-items: center;
     justify-content: center;
-    display: grid;
+    font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
     `
 export const GridEndDate = styled.div`
-    grid-area: endDate;
-    //grid-column-start: 3;
-    //grid-column-end: 3;
-    //grid-row-start: 1;
-    //grid-row-end: 1;
+    grid-row: span 1;
+    grid-column:3;
     justify-self: center;
     align-items: center;
     justify-content: center;
-    display: grid;
+    font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
     `
 export const GridParticipants = styled.div`
-    grid-area: participants;
-    //grid-column-start: 4;
-    //grid-column-end: 4;
-    //grid-row-start: 1;
-    //grid-row-end: 1;
     align-items: center;
+    grid-row: span 1;
+    grid-column:4;
     justify-content: center;
-    display: grid;
+    justify-self: center;
+    font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
     `
 export const GridDelete = styled.div`
-    grid-area: delete;
-    //grid-column-start: 5;
-    //grid-column-end: 5;
-    //grid-row-start: 1;
-    //grid-row-end: 1;
+    grid-row: span 1;
+    grid-column: 5;
     justify-self: center;
     align-items: center;
-    display: grid;
     `
 
 export const GridForm = styled.div`
-    grid-area: form;
-    //grid-column-start: 1;
-    //grid-column-end: 5;
-    display: grid;
+    grid-column:1 / 6 ;
     `
 
 export const GridAdd = styled.div`
-    grid-area: add;
-    //grid-column-start: 3;
-    //grid-column-end: 4;
-    //grid-row-start: 6;
-    //grid-row-end: 6;
-    justify-content: center;
-    display: grid;
+    grid-column:3;
+    grid-row: 7;
+    justify-self: center;
     `
-
-
-export const GridHeader = styled.div`
-    //grid-area: header;
-    font-weight: bold;
-    display: grid;
-    border-bottom: 1px solid black;
-    //grid-column-start: 1;
-    //grid-column-end: 6;
-`
 
 export const GridMission = styled.div`
     display: grid;

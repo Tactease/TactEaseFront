@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import {AddButton, FormConstainer, TextFieldContainer} from "./AddMissionsForm.style";
+import {FormConstainer} from "./AddMissionsForm.style";
 import Button from "../Button/Button";
 import { format } from 'date-fns';
 import moment from 'moment';
@@ -154,11 +154,9 @@ const AddMissionsForm = (props) => {
                 />
                     </GridParticipants>
                     </GridContainer>
-                <AddButton>
                 <Button width={85} text={'Add'} onClick={addMission} disabled={
                     !missionData.missionType || !missionData.startDate || !missionData.endDate || !missionData.soldierCount
                 }></Button>
-                </AddButton>
             </FormConstainer>
     )
 }
