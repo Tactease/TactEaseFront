@@ -7,8 +7,9 @@ import { StatusCell } from "./RequestDataGrid.styled.js";
 import ApproveRequestForm from "./ApproveRequestForm.jsx";
 
 // eslint-disable-next-line react/prop-types
-const RequestDataGrid = ({ user }) => {
+const RequestDataGrid = ({ user, reloadData }) => {
     const [requests, setRequests] = useState([]);
+    const [reloadGrid, setReloadGrid] = useState(true);
     const columns = [
         { field: 'requestType', headerName: 'Request Type', flex: 1, align: 'center', headerAlign: 'center' },
         { field: 'hours', headerName: 'Hours', flex: 1, align: 'center', headerAlign: 'center' },
@@ -32,14 +33,19 @@ const RequestDataGrid = ({ user }) => {
                 req.push(newReq);
             }
             setRequests(req);
+            setReloadGrid(false);
         });
 
-    }, []);
+    }, [reloadGrid]);
 
+
+    const reloadDataGrid = () => {
+        setReloadGrid(true);
+    };
 
     const renderCell = (params) => {
         if (params.field === 'status' && params.value === 'Pending') {
-            return <ApproveRequestForm user={user} req={params.row} />;
+            return <ApproveRequestForm soldier={user} reqId={params.row.id - 1} reloadData={reloadData} reloadDataGrid={reloadDataGrid} />;
         } else {
             return <StatusCell status={params.value}>{params.value}</StatusCell>;
         }

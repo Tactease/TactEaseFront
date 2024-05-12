@@ -11,6 +11,7 @@ import { TableHeaderCell } from './RequestDataGrid.styled.js';
 
 const SoldierRequests = ({ user }) => {
     const [soldiers, setSoldiers] = useState([]);
+    const [reloadGrid, setReloadGrid] = useState(true);
 
     useEffect(() => {
         getSoldierByClassId(user.depClass.classId).then((data) => {
@@ -41,8 +42,13 @@ const SoldierRequests = ({ user }) => {
                 }
             }
             setSoldiers(soldiersData);
+            setReloadGrid(false);
         });
-    }, []);
+    }, [reloadGrid]);
+
+    const reloadData = () => {
+        setReloadGrid(true);
+    };
 
     return (
         <Table aria-label="collapsible table">
@@ -73,7 +79,7 @@ const SoldierRequests = ({ user }) => {
             </TableHead>
             <TableBody>
                 {soldiers.map((soldier) => (
-                    <SoldiersRow key={soldier._id} soldier={soldier} />
+                    <SoldiersRow key={soldier._id} soldier={soldier} reloadData={reloadData} />
                 ))}
             </TableBody>
         </Table>

@@ -40,3 +40,15 @@ export const ApproveFormContainter = styled.div`
     flex-flow: row;
     justify-content: center;
 `;
+
+export const PendingRequestsCell = styled.div`
+    color: ${props => {
+        switch (props.status) {
+            case "true":
+                return '#9489D6';
+            default:
+                return 'inherit';
+        }
+    }};
+    font-weight: 500;
+`;
