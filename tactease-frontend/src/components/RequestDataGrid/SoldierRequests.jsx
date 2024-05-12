@@ -1,63 +1,88 @@
 import { useState, useEffect } from "react";
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import {getRequestsOfSoldier} from "../../API/requests.api.js";
+import { getSoldierByClassId } from "../../API/soldiers.api.js";
+import SoldiersRow from "./SoldiersRow.jsx";
+import { TableHeaderCell } from './RequestDataGrid.styled.js';
 
-const SoldierRequests = ({ user, columns }) => {
-    const [requests, setRequests] = useState([]);
+
+const SoldierRequests = ({ user }) => {
     const [soldiers, setSoldiers] = useState([]);
+    const [reloadGrid, setReloadGrid] = useState(true);
 
     useEffect(() => {
-
-        getRequestsOfSoldier(user._id.toString()).then((data) => {
-            let req = [];
-            for (let i = 0; i < data.data.length; i++) {
-                let newReq = {
-                    id: i + 1,
-                    requestType: data.data[i].requestType,
-                    hours: data.data[i].startDate.split(' ')[1] + ' - ' + data.data[i].endDate.split(' ')[1],
-                    dates: data.data[i].startDate.split(' ')[0] + ' - ' + data.data[i].endDate.split(' ')[0],
-                    note: data.data[i].note,
-                    status: data.data[i].status
+        getSoldierByClassId(user.depClass.classId).then((data) => {
+            const result = data.data;
+            let soldiersData = [];
+            for (let i = 0; i < result.length; i++) {
+                let requestStatus = false;
+                const requests = result[i].requestList;
+                if (requests.length > 0) {
+                    for (let j = 0; j < requests.length; j++) {
+                        if (requests[j].status === "Pending") {
+                            requestStatus = true;   
+                        }
+                    }
                 }
-                req.push(newReq);
+
+                if (result[i].pakal !== "COMMANDER") {
+                    let newSoldier = {
+                        _id: result[i]._id,
+                        depClass: result[i].depClass,
+                        personalNumber: result[i].personalNumber,
+                        fullName: result[i].fullName,
+                        pakal: result[i].pakal,
+                        requestList: result[i].requestList,
+                        requestStatus: requestStatus
+                    }
+                    soldiersData.push(newSoldier);
+                }
             }
-            setRequests(req);
+            setSoldiers(soldiersData);
+            setReloadGrid(false);
         });
+    }, [reloadGrid]);
 
-
-    }, []);
+    const reloadData = () => {
+        setReloadGrid(true);
+    };
 
     return (
-        <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell />
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <Table aria-label="collapsible table">
+            <TableHead>
+                <TableRow>
+                    <TableCell style={{ width: '10%' }} />
+                    <TableCell style={{ width: '20%' }} align="center">
+                        <TableHeaderCell>
+                            Personal Number
+                        </TableHeaderCell>
+                    </TableCell>
+                    <TableCell style={{ width: '20%' }} align="center">
+                        <TableHeaderCell>
+                            Personal Number
+                        </TableHeaderCell>
+                    </TableCell>
+                    <TableCell style={{ width: '20%' }} align="center">
+                        <TableHeaderCell>
+                            Pakal
+                        </TableHeaderCell>
+                    </TableCell>
+                    <TableCell style={{ width: '30%' }} align="center">
+                        <TableHeaderCell>
+                            Pending Requests
+                        </TableHeaderCell>
+                    </TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {soldiers.map((soldier) => (
+                    <SoldiersRow key={soldier._id} soldier={soldier} reloadData={reloadData} />
+                ))}
+            </TableBody>
+        </Table>
     )
 };
 

@@ -16,10 +16,10 @@ export const createRequest = async (soldierId,request) => {
     return await axios.post(`${renderURL}/soldiers/${soldierId}/requests`, request);
 }
 
-export const updateSoldier = async (soldierId,requestId,request) => {
+export const updateRequest = async (soldierId,requestId,request) => {
     return await axios.put(`${renderURL}/soldiers/${soldierId}/requests/${requestId}`, request);
 }
 
-export const deleteSoldier = async (soldierId, requestId) => {
+export const deleteRequest = async (soldierId, requestId) => {
     return await axios.delete(`${renderURL}/soldiers/${soldierId}/requests/${requestId}`);
 }

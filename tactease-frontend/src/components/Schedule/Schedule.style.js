@@ -7,35 +7,36 @@ export const TableContainer = styled.table`
     width: 100%;
     margin: 1rem 0;
     display: flex;
-    flex-direction: column;
+    flex-flow: column;
 `;
 
 export const TableHeader = styled.th`
     text-align: left;
-    width: 100%;
+    width: 33%;
     padding: 8px;
     font-weight: 1000px;
     display: flex;
-    flex-direction: row;
+    flex-flow: row;
     justify-content: space-around;
+    text-align: center;
 `;
 
 export const TableRow = styled.tr`
     border: 1px solid #fff;
     border-bottom: 1px solid #eee;
-    width: 100%;
     text-align: left;
     padding: 4px;
     display: flex;
-    flex-direction: row;
+    flex-flow: row;
     justify-content: space-around;
-    width: 100%;
+
 `;
 
 export const TableCell = styled.td`
-    border: 1px solid #fff;
-    text-align: left;
-    padding: 8px;
+    text-align: center;
+    width: 33%;
+    text-align: center;
+
 `;
 
 export const TableHead = styled.thead`
