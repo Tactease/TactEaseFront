@@ -28,11 +28,23 @@ const Calendar = () => {
 
 
     const nextWeek = () => {
-        setStartDate(prevDate => new DayPilot.Date(prevDate).addDays(7));
+        if(getViewType() === "Week"){
+            setStartDate(prevDate => new DayPilot.Date(prevDate).addDays(7));
+        }else if(getViewType() === "Days") {
+            setStartDate(prevDate => new DayPilot.Date(prevDate).addDays(3));
+        }else{
+            setStartDate(prevDate => new DayPilot.Date(prevDate).addDays(1));
+        }
     }
 
     const prevWeek = () => {
-        setStartDate(prevDate => new DayPilot.Date(prevDate).addDays(-7));
+        if(getViewType() === "Week"){
+            setStartDate(prevDate => new DayPilot.Date(prevDate).addDays(-7));
+        }else if(getViewType() === "Days") {
+            setStartDate(prevDate => new DayPilot.Date(prevDate).addDays(-3));
+        }else{
+            setStartDate(prevDate => new DayPilot.Date(prevDate).addDays(-1));
+        }
     }
 
 
@@ -116,8 +128,20 @@ const Calendar = () => {
 
     };
 
+    const getViewType = () => {
+        const width = window.innerWidth;
+        if (width <= 480) { // Mobile
+            return "Day";
+        } else if (width <= 768) { // Tablet
+            return "Days";
+        } else {
+            return "Week";
+        }
+    };
+
     const [calendarConfig, setCalendarConfig] = useState({
-            viewType: "Week",
+            viewType: getViewType(),
+            days: 3,
             durationBarVisible: false,
             eventHeight: 50,
             showCurrentTime: true,
@@ -234,6 +258,22 @@ const Calendar = () => {
         });
 
     }, [startDate]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setCalendarConfig(prevConfig => ({
+                ...prevConfig,
+                viewType: getViewType(),
+            }));
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
 
     return (
