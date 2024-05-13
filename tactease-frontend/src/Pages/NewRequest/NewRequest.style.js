@@ -6,7 +6,7 @@ export const RequestForm = styled.form`
     align-items: center;
     width: 100%;
     position: relative;
-    top: 50px;
+    top: 30px;
 `;
 
 export const RequestLayout = styled.div`
