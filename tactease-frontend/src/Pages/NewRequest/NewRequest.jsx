@@ -5,7 +5,7 @@ import {useState} from "react";
 import {format} from "date-fns";
 import moment from "moment/moment.js";
 import Button from "../../components/Button/Button.jsx";
-import {RequestForm} from "./NewRequest.style.js";
+import {RequestForm, RequestLayout} from "./NewRequest.style.js";
 import {createRequest} from "../../API/requests.api.js";
 import {useNavigate} from "react-router-dom";
 
@@ -76,17 +76,16 @@ const NewRequest = () => {
             .catch((err) => console.log(err))
     }
     return (
-        <div>
+        <RequestLayout>
             <PageTitle title="New Request"/>
             <RequestForm>
                 <TextField
-                    required
                     id="requestType"
                     name="requestType"
                     label="Request Type"
                     select
                     variant="standard"
-                    style={{width: '10%'}}
+                    style={{width: '220px', marginBottom: '10px'}}
                     value={requestData.requestType} // set value prop to state value
                     onChange={(e) => handleForm(e)}
                 >
@@ -97,28 +96,29 @@ const NewRequest = () => {
                     ))}
                 </TextField>
                 <TextField
-                    // required
                     id="startDate"
                     name="startDate"
-                    label=" "
+                    label="Start Date"
                     variant="standard"
                     type="datetime-local"
                     error={!!errors.startDate}
                     helperText={errors.startDate}
                     min={currentDate}
+                    style={{width: '220px', marginBottom: '10px'}}
+                    InputLabelProps={{ shrink: true }}
                     onChange={(e) => handleForm(e)}
                 />
                 <TextField
-                    // required
                     id="endDate"
                     name="endDate"
-                    label=" "
-                    // placeholder="dd/MM/yyyy HH:mm"
+                    label="End Date"
                     variant="standard"
                     type="datetime-local"
+                    style={{width: '220px', marginBottom: '10px'}}
                     error={!!errors.endDate}
                     helperText={errors.endDate}
                     min={currentDate}
+                    InputLabelProps={{ shrink: true }}
                     onChange={(e) => handleForm(e)}
                 />
                 <TextField
@@ -127,13 +127,14 @@ const NewRequest = () => {
                     label="Note"
                     variant="standard"
                     type="text"
+                    style={{width: '220px', marginBottom: '10px'}}
                     onChange={(e) => handleForm(e)}
                 />
                 <Button width={85} text={'Submit'} onClick={(e) => addRequest(e)} disabled={
                     !requestData.requestType || !requestData.startDate || !requestData.endDate || !requestData.note
                 }></Button>
             </RequestForm>
-        </div>
+        </RequestLayout>
     );
 }
 
