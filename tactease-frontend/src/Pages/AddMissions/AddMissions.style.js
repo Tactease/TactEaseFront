@@ -28,6 +28,7 @@ export const GridMissionType = styled.div`
     justify-self: center;
     justify-content: center;
     font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
+    padding: 10px;
     `
 export const GridStartDate = styled.div`
     grid-row: span 1;
@@ -36,6 +37,7 @@ export const GridStartDate = styled.div`
     align-items: center;
     justify-content: center;
     font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
+    padding: 10px;
     `
 export const GridEndDate = styled.div`
     grid-row: span 1;
@@ -44,6 +46,7 @@ export const GridEndDate = styled.div`
     align-items: center;
     justify-content: center;
     font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
+    padding: 10px;
     `
 export const GridParticipants = styled.div`
     align-items: center;
@@ -52,12 +55,14 @@ export const GridParticipants = styled.div`
     justify-content: center;
     justify-self: center;
     font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
+    padding: 10px;
     `
 export const GridDelete = styled.div`
     grid-row: span 1;
     grid-column: 5;
     justify-self: center;
     align-items: center;
+    padding: 10px;
     `
 
 export const GridForm = styled.div`
