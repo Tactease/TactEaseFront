@@ -11,7 +11,7 @@ import {
 } from '@mui/x-data-grid';
 
 // eslint-disable-next-line react/prop-types
-const RequestDataGrid = ({ user, reloadData }) => {
+const RequestDataGrid = ({ user, soldier, reloadData }) => {
     const [requests, setRequests] = useState([]);
     const [reloadGrid, setReloadGrid] = useState(true);
     const columns = [
@@ -23,7 +23,7 @@ const RequestDataGrid = ({ user, reloadData }) => {
     ];
 
     useEffect(() => {
-        getRequestsOfSoldier(user._id.toString()).then((data) => {
+        getRequestsOfSoldier(soldier._id.toString()).then((data) => {
             let req = [];
             for (let i = 0; i < data.data.length; i++) {
                 let newReq = {
@@ -49,7 +49,7 @@ const RequestDataGrid = ({ user, reloadData }) => {
 
     const renderCell = (params) => {
         if (user.pakal === 'COMMANDER' && params.field === 'status' && params.value === 'Pending') {
-            return <ApproveRequestForm soldier={user} reqId={params.row.id - 1} reloadData={reloadData} reloadDataGrid={reloadDataGrid} />;
+            return <ApproveRequestForm soldier={soldier} reqId={params.row.id - 1} reloadData={reloadData} reloadDataGrid={reloadDataGrid} />;
         } else {
             return <StatusCell status={params.value}>{params.value}</StatusCell>;
         }

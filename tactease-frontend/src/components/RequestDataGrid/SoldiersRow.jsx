@@ -8,7 +8,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import RequestDataGrid from "./RequestDataGrid.jsx";
 import {RequestsFormContainer, SecondTableHeader, PendingRequestsCell} from './RequestDataGrid.styled.js';
 
-const SoldiersRow = ({ soldier, reloadData }) => {
+const SoldiersRow = ({user, soldier, reloadData }) => {
     const [open, setOpen] = React.useState(false);
 
     return (
@@ -40,7 +40,7 @@ const SoldiersRow = ({ soldier, reloadData }) => {
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <RequestsFormContainer>
                             <SecondTableHeader>{soldier.fullName} Requests </SecondTableHeader>
-                            <RequestDataGrid user={soldier} reloadData={reloadData} />
+                            <RequestDataGrid user={user} soldier={soldier} reloadData={reloadData} />
                         </RequestsFormContainer>
                     </Collapse>
                 </TableCell>
