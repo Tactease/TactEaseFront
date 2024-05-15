@@ -79,7 +79,7 @@ const SoldierRequests = ({ user }) => {
             </TableHead>
             <TableBody>
                 {soldiers.map((soldier) => (
-                    <SoldiersRow key={soldier._id} soldier={soldier} reloadData={reloadData} />
+                    <SoldiersRow key={soldier._id} user={user} soldier={soldier} reloadData={reloadData} />
                 ))}
             </TableBody>
         </Table>

@@ -15,7 +15,7 @@ const Requests = () => {
         <RequestsContainer>
             <PageTitle title={pageTitle} />
             <RequestsDataGrid>
-                {user.pakal !== "COMMANDER" ? <RequestDataGrid user={user} /> : null}
+                {user.pakal !== "COMMANDER" ? <RequestDataGrid user={user} soldier={user} /> : null}
                 {user.pakal === "COMMANDER" ? <SoldierRequests user={user} /> : null}
             </RequestsDataGrid>
             {user.pakal !== "COMMANDER" ? (
