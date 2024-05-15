@@ -20,16 +20,16 @@ const Footer = () => {
 
     return (
         <FooterContainer>
-            <Link to="requests">
             <IconButton aria-label="delete" size="large">
+            <Link to="requests">
                 <QuestionAnswerIcon />
+            </Link>
             </IconButton>
-            </Link>
-            <Link to="/">
                 <IconButton aria-label="delete" size="large" >
+            <Link to="/">
                     <HomeIcon />
-                </IconButton>
             </Link>
+                </IconButton>
             <IconButton aria-label="logout" size="large" onClick={handleLogout}>
                 <Logout />
             </IconButton>
