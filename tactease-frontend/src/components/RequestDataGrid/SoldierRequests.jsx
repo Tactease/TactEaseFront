@@ -62,7 +62,7 @@ const SoldierRequests = ({ user }) => {
                     </TableCell>
                     <TableCell style={{ width: '20%' }} align="center">
                         <TableHeaderCell>
-                            Personal Number
+                            Name
                         </TableHeaderCell>
                     </TableCell>
                     <TableCell style={{ width: '20%' }} align="center">
