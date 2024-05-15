@@ -12,6 +12,8 @@ import {
     GridStartDate,
     GridEndDate,
     GridParticipants } from "../../Pages/AddMissions/AddMissions.style.js";
+import EventIcon from '@mui/icons-material/Event';
+import IconButton from '@mui/material/IconButton';
 
 const missionTypes = [
     {
@@ -38,6 +40,19 @@ const AddMissionsForm = (props) => {
     const [missionData, setMissionData] = useState( editMission || {classId:user.depClass.classId, soldiersOnMission:[]} );
     const [currentDate, setCurrentDate] = useState(format(new Date(), 'yyyy-MM-ddTHH:mm'));
     const [errors, setErrors] = useState({});
+    const [isTabletOrSmaller, setIsTabletOrSmaller] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsTabletOrSmaller(window.innerWidth <= 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         setCurrentDate(format(new Date(), 'yyyy-MM-ddTHH:mm'));
@@ -122,10 +137,19 @@ const AddMissionsForm = (props) => {
                     name="startDate"
                     variant="standard"
                     type="datetime-local"
+                    className="datetime-input"
                     error={!!errors.startDate}
                     helperText={errors.startDate}
                     min={currentDate}
                     onChange={(e) => handleForm(e)}
+                    // InputProps={isTabletOrSmaller ? {
+                    //     disableUnderline: true,
+                    //     endAdornment: (
+                    //         <IconButton>
+                    //             <EventIcon />
+                    //         </IconButton>
+                    //     ),
+                    // } : {}}
                 />
                     </GridStartDate>
                     <GridEndDate>
@@ -135,6 +159,7 @@ const AddMissionsForm = (props) => {
                     name="endDate"
                     variant="standard"
                     type="datetime-local"
+                    className="datetime-input"
                     error={!!errors.endDate}
                     helperText={errors.endDate}
                     min={currentDate}

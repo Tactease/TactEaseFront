@@ -1,1 +1,21 @@
+.datetime-input input[type="datetime-local"]{
+    width: 10vw;
+}
 
+@media (max-width: 768px) {
+    .datetime-input input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
+        opacity: 0;
+    }
+
+    .datetime-input input[type="datetime-local"]::-webkit-clear-button {
+        display: none;
+    }
+
+    .datetime-input input[type="datetime-local"]::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    .datetime-input input[type="datetime-local"]{
+        width: 5vw;
+    }
+}

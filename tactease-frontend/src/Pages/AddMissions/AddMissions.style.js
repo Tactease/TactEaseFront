@@ -17,8 +17,7 @@ export const GridContainer = styled.div`
     display: grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-template-rows: auto;
-    //grid-template-rows: 25% 25% 25% 25% 25% 25% 25%;
-    width: 80vw;
+    width: 90vw;
 `
 
 export const GridMissionType = styled.div`
@@ -29,6 +28,15 @@ export const GridMissionType = styled.div`
     justify-content: center;
     font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
     padding: 10px;
+    font-size: 1.2vw;
+    
+    @media (max-width: 900px) {
+        font-size: 2vw;
+    }
+
+    @media (max-width: 555px) {
+        font-size: 3vw;
+    }
     `
 export const GridStartDate = styled.div`
     grid-row: span 1;
@@ -38,6 +46,15 @@ export const GridStartDate = styled.div`
     justify-content: center;
     font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
     padding: 10px;
+    font-size: 1.2vw;
+    
+    @media (max-width: 900px) {
+        font-size: 2vw;
+    }
+
+    @media (max-width: 555px) {
+        font-size: 3vw;
+    }
     `
 export const GridEndDate = styled.div`
     grid-row: span 1;
@@ -47,6 +64,15 @@ export const GridEndDate = styled.div`
     justify-content: center;
     font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
     padding: 10px;
+    font-size: 1.2vw;
+    
+    @media (max-width: 900px) {
+        font-size: 2vw;
+    }
+
+    @media (max-width: 555px) {
+        font-size: 3vw;
+    }
     `
 export const GridParticipants = styled.div`
     align-items: center;
@@ -56,6 +82,15 @@ export const GridParticipants = styled.div`
     justify-self: center;
     font-weight: ${props => props.isHeader ? 'bold' : 'normal'};
     padding: 10px;
+    font-size: 1.2vw;
+
+    @media (max-width: 900px) {
+        font-size: 2vw;
+    }
+
+    @media (max-width: 555px) {
+        font-size: 3vw;
+    }
     `
 export const GridDelete = styled.div`
     grid-row: span 1;
@@ -63,6 +98,15 @@ export const GridDelete = styled.div`
     justify-self: center;
     align-items: center;
     padding: 10px;
+    width: 1.2vw;
+
+    @media (max-width: 900px) {
+        font-size: 2vw;
+    }
+    
+    @media (max-width: 555px) {
+        font-size: 3vw;
+    }
     `
 
 export const GridForm = styled.div`
@@ -85,5 +129,5 @@ export const GridMission = styled.div`
 
 export const ButtonPosition = styled.div`
 position: absolute;
-bottom: 5%;
+bottom: 10%;
 `
