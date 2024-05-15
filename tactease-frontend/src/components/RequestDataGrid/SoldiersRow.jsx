@@ -10,7 +10,6 @@ import {RequestsFormContainer, SecondTableHeader, PendingRequestsCell} from './R
 
 const SoldiersRow = ({ soldier, reloadData }) => {
     const [open, setOpen] = React.useState(false);
-    const [reloadRow, setReloadRow] = React.useState(false);
 
     return (
         <React.Fragment>
@@ -30,10 +29,10 @@ const SoldiersRow = ({ soldier, reloadData }) => {
                 <TableCell align="center">{soldier.fullName}</TableCell>
                 <TableCell align="center">{soldier.pakal}</TableCell>
                 <TableCell align="center">
-                    <PendingRequestsCell status={soldier.requestStatus.toString()}> 
-                        {soldier.requestStatus === true ? "Pending requests" : "No requests to approve"}    
+                    <PendingRequestsCell status={soldier.requestStatus.toString()}>
+                        {soldier.requestStatus === true ? "Pending requests" : "No requests to approve"}
                     </PendingRequestsCell>
-                   
+
                     </TableCell>
             </TableRow>
             <TableRow>

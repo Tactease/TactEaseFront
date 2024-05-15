@@ -23,7 +23,7 @@ const SoldierRequests = ({ user }) => {
                 if (requests.length > 0) {
                     for (let j = 0; j < requests.length; j++) {
                         if (requests[j].status === "Pending") {
-                            requestStatus = true;   
+                            requestStatus = true;
                         }
                     }
                 }

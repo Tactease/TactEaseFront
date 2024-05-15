@@ -44,13 +44,13 @@ const RequestDataGrid = ({ user, reloadData }) => {
     };
 
     const renderCell = (params) => {
-        if (params.field === 'status' && params.value === 'Pending') {
+        if (user.pakal === 'COMMANDER' && params.field === 'status' && params.value === 'Pending') {
             return <ApproveRequestForm soldier={user} reqId={params.row.id - 1} reloadData={reloadData} reloadDataGrid={reloadDataGrid} />;
         } else {
             return <StatusCell status={params.value}>{params.value}</StatusCell>;
         }
     };
-    
+
 
     const modifiedColumns = columns.map(column => {
         if (column.field === 'status') {
