@@ -1,10 +1,14 @@
-import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from "react";
 import { getRequestsOfSoldier } from "../../API/requests.api.js";
 import { formatMissionType } from "../Request/Request.jsx";
 import { StatusCell } from "./RequestDataGrid.styled.js";
 import ApproveRequestForm from "./ApproveRequestForm.jsx";
+import {
+    DataGrid,
+    useGridApiRef,
+    gridClasses,
+} from '@mui/x-data-grid';
 
 // eslint-disable-next-line react/prop-types
 const RequestDataGrid = ({ user, reloadData }) => {
@@ -51,6 +55,10 @@ const RequestDataGrid = ({ user, reloadData }) => {
         }
     };
 
+    const autosizeOptions = {
+        includeOutliers: true,
+    };
+    const apiRef = useGridApiRef();
 
     const modifiedColumns = columns.map(column => {
         if (column.field === 'status') {
@@ -65,9 +73,17 @@ const RequestDataGrid = ({ user, reloadData }) => {
     return (
         <Box sx={{ width: '100%' }}>
             <DataGrid
+                apiRef={apiRef}
                 columns={modifiedColumns}
                 rows={requests}
                 autoHeight
+                autosizeOptions={autosizeOptions}
+                getRowHeight={() => 'auto'}
+                sx={{
+                    [`& .${gridClasses.cell}`]: {
+                        py: 2,
+                    },
+                }}
             />
         </Box>
     );

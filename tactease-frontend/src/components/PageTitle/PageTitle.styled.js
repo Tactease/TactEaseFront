@@ -8,7 +8,7 @@ export const PageTitleContainer = styled.div`
 `;
 
 export const PageTitleStyled = styled.h1`
-    font-size: 1.8em;
+    font-size: 1.8rem;
     font-weight: 500;
     color: #0E3B77;
 `;

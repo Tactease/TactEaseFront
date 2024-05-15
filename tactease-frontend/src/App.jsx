@@ -1,12 +1,13 @@
 import Header from './components/Header/Header.jsx';
 import CalenderPage from './Pages/CalenderPage/CalenderPage.jsx';
 import Login from "./Pages/Login/Login.jsx";
-import AddMissions from "./Pages/AddMissions/AddMissions.jsx";
-import {Route, Routes, Navigate} from 'react-router-dom'
 import Requests from "./Pages/Requests/Requests.jsx";
+import AddMissions from "./Pages/AddMissions/AddMissions.jsx";
 import NewRequest from "./Pages/NewRequest/NewRequest.jsx";
-import {useEffect} from "react";
 import NotFound from "./Pages/NotFound/NotFound.jsx";
+import Footer from "./components/Footer/Footer.jsx";
+import {Route, Routes, Navigate} from 'react-router-dom'
+import {useEffect} from "react";
 
 function App() {
     const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/notFound" element={<NotFound />}/>
                 <Route path="*" element={user ? <Navigate to="/notFound"/> : <Navigate to="/login"/>}/>
             </Routes>
+            <Footer/>
         </div>
     );
 }

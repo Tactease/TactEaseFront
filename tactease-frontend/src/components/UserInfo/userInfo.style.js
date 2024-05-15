@@ -8,6 +8,10 @@ export const UserInfoContainer = styled.div`
     justify-content: flex-end;
     align-items: center;
     margin: 0.5% 1% 0 0;
+    
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 export const UserImg = styled.img`

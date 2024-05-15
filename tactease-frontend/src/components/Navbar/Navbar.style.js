@@ -7,6 +7,10 @@ const NavigateStyle = styled.div`
     flex-flow: row;
     align-items: center;
     width: 100%;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const UlStyle = styled.ul`
