@@ -5,7 +5,8 @@ import RequestDataGrid from "../../components/RequestDataGrid/RequestDataGrid.js
 import SoldierRequests from "../../components/RequestDataGrid/SoldierRequests.jsx";
 import Button from "../../components/Button/Button.jsx";
 import {Link} from "react-router-dom";
-import SoldierRequestMobile from "../../components/MobileRequestGrids/SoldierRequestMobile.jsx";
+import RequestMobile from "../../components/MobileRequestGrids/RequestMobile.jsx";
+import SoldierRequestsMobile from "../../components/MobileRequestGrids/SoldierRequestsMobile.jsx";
 
 const Requests = () => {
     const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
@@ -20,7 +21,8 @@ const Requests = () => {
                 {user.pakal === "COMMANDER" ? <SoldierRequests user={user} /> : null}
             </RequestsDataGrid>
             <RequestsDataGridMobile>
-                <SoldierRequestMobile user={user} soldier={user}/>
+                {user.pakal !== "COMMANDER" ? <RequestMobile user={user} soldier={user}/> : null}
+                {user.pakal === "COMMANDER" ? <SoldierRequestsMobile user={user} /> : null}
             </RequestsDataGridMobile>
             {user.pakal !== "COMMANDER" ? (
             <Link to="/newRequest">

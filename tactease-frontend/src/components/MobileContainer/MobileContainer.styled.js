@@ -7,6 +7,7 @@ export const MobileContainer = styled.div`
     width: 90vw;   
     background-color: #FAFAFA; 
     border-radius: 5px;
+    display: ${props => props.display ? 'flex' : 'none'};
 `;
 export const Line = styled.svg`
     opacity: 0.3;
@@ -28,6 +29,17 @@ export const TextContainer = styled.div`
     justify-content: center;
     gap: 7px;
 `;
+
+export const ButtonTextConatiner = styled.button`
+    font-size: 1rem;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 7px;
+    border: none;
+    background-color: transparent;
+`
 
 export const BoldedText = styled.span`
     font-weight: 500;

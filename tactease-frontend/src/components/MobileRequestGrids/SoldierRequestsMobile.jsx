@@ -1,17 +1,12 @@
 import { useState, useEffect } from "react";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import { getSoldierByClassId } from "../../API/soldiers.api.js";
-import SoldiersRow from "./SoldiersRow.jsx";
-import { TableHeaderCell } from './RequestDataGrid.styled.js';
-
+import { AllRequestContainer } from "../MobileContainer/MobileContainer.styled.js";
+import MobileReqContainer from "../../components/MobileContainer/MobileContainer.jsx";
+import RequestMobile from "./RequestMobile.jsx";
 
 const SoldierRequestsMobile = ({ user }) => {
     const [soldiers, setSoldiers] = useState([]);
-    const [reloadGrid, setReloadGrid] = useState(true);
+    const [selectedSoldier, setSelectedSoldier] = useState(null);
 
     useEffect(() => {
         getSoldierByClassId(user.depClass.classId).then((data) => {
@@ -42,20 +37,28 @@ const SoldierRequestsMobile = ({ user }) => {
                 }
             }
             setSoldiers(soldiersData);
-            setReloadGrid(false);
         });
-    }, [reloadGrid]);
+    }, []);
 
-    const reloadData = () => {
-        setReloadGrid(true);
-    };
+    const handleSoldierClick = (soldier) => {
+        setSelectedSoldier(soldier);
+    }
 
     return (
-            <TableBody>
-                {soldiers.map((soldier) => (
-                    <SoldiersRow key={soldier._id} user={user} soldier={soldier} reloadData={reloadData} />
-                ))}
-            </TableBody>
+        <AllRequestContainer>
+        {soldiers.map((soldier) => (
+            <MobileReqContainer
+                key={soldier._id}
+                user={user}
+                soldier={soldier}
+                onClick={() => handleSoldierClick(soldier)}
+                display={selectedSoldier && selectedSoldier._id === soldier._id}
+            />
+        ))}
+        {selectedSoldier && (
+            <RequestMobile user={user} soldier={selectedSoldier} />
+        )}
+    </AllRequestContainer>
 
     )
 };

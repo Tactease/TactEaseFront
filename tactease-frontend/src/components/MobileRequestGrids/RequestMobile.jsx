@@ -1,15 +1,13 @@
-import React from 'react';
 import { useEffect, useState } from "react";
 import { getRequestsOfSoldier } from "../../API/requests.api.js";
 import { formatMissionType } from "../Request/Request.jsx";
-import { StatusCell } from "../RequestDataGrid/RequestDataGrid.styled.js";
-import ApproveRequestForm from "../RequestDataGrid/ApproveRequestForm.jsx";
-import MobileReqContainer from "../../components/MobileContainer/MobileContainer.jsx";
+import MobileReqContainer from "../MobileContainer/MobileContainer.jsx";
 import { AllRequestContainer } from "../MobileContainer/MobileContainer.styled.js";
 
-const SoldierRequestMobile = ({ user, soldier, reloadData }) => {
+const RequestMobile = ({ user, soldier, reloadData }) => {
     const [requests, setRequests] = useState([]);
-
+    const [reloadRequestsData, setReloadRequestsData] = useState(true);
+    const [setDisplay, setSetDisplay] = useState(true);
 
     useEffect(() => {
         getRequestsOfSoldier(soldier._id.toString()).then((data) => {
@@ -26,18 +24,19 @@ const SoldierRequestMobile = ({ user, soldier, reloadData }) => {
                 req.push(newReq);
             }
             setRequests(req);
+            setReloadRequestsData(false);
         });
 
-    }, []);
+    }, [reloadRequestsData]);
 
 
     return (
         <AllRequestContainer>
             {requests.map((request) => (
-                <MobileReqContainer key={request.id} user={user} soldier={soldier} request={request} reloadData={reloadData} />
+                <MobileReqContainer key={request.id} reqId={request.id} user={user} soldier={soldier} request={request} reloadData={reloadRequestsData} setDisplay={setDisplay} />
             ))}
         </AllRequestContainer>
     );
 };
 
-export default SoldierRequestMobile;
+export default RequestMobile;
