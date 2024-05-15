@@ -9,7 +9,7 @@ import SoldiersRow from "./SoldiersRow.jsx";
 import { TableHeaderCell } from './RequestDataGrid.styled.js';
 
 
-const SoldierRequests = ({ user }) => {
+const SoldierRequestsMobile = ({ user }) => {
     const [soldiers, setSoldiers] = useState([]);
     const [reloadGrid, setReloadGrid] = useState(true);
 
@@ -51,39 +51,13 @@ const SoldierRequests = ({ user }) => {
     };
 
     return (
-        <Table aria-label="collapsible table">
-            <TableHead>
-                <TableRow>
-                    <TableCell style={{ width: '10%' }} />
-                    <TableCell style={{ width: '20%' }} align="center">
-                        <TableHeaderCell>
-                            Personal Number
-                        </TableHeaderCell>
-                    </TableCell>
-                    <TableCell style={{ width: '20%' }} align="center">
-                        <TableHeaderCell>
-                            Name
-                        </TableHeaderCell>
-                    </TableCell>
-                    <TableCell style={{ width: '20%' }} align="center">
-                        <TableHeaderCell>
-                            Pakal
-                        </TableHeaderCell>
-                    </TableCell>
-                    <TableCell style={{ width: '30%' }} align="center">
-                        <TableHeaderCell>
-                            Pending Requests
-                        </TableHeaderCell>
-                    </TableCell>
-                </TableRow>
-            </TableHead>
             <TableBody>
                 {soldiers.map((soldier) => (
                     <SoldiersRow key={soldier._id} user={user} soldier={soldier} reloadData={reloadData} />
                 ))}
             </TableBody>
-        </Table>
+
     )
 };
 
-export default SoldierRequests;
+export default SoldierRequestsMobile;
