@@ -1,5 +1,4 @@
-import {FooterContainer} from "./Footer.styled.js";
-import { grey } from "@mui/material/colors";
+import { FooterContainer } from "./Footer.styled.js";
 
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
@@ -15,17 +14,15 @@ const Footer = () => {
 
     return (
         <FooterContainer>
-            <Stack direction="row" spacing={1}>
-                <IconButton aria-label="delete">
-                    <QuestionAnswerIcon />
-                </IconButton>
-                <IconButton aria-label="delete" disabled color="requests">
-                    <HomeIcon />
-                </IconButton>
-                <IconButton color="primary" aria-label="logout">
-                    <Logout />
-                </IconButton>
-            </Stack>
+            <IconButton aria-label="delete" size="large">
+                <QuestionAnswerIcon />
+            </IconButton>
+            <IconButton aria-label="delete" size="large" >
+                <HomeIcon />
+            </IconButton>
+            <IconButton aria-label="logout" size="large">
+                <Logout />
+            </IconButton>
         </FooterContainer>
     )
 }

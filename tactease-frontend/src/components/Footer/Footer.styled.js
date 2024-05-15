@@ -1,24 +1,19 @@
 import styled from "styled-components";
-import { muiStyled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 
 export const FooterContainer = styled.footer`
     width: 100%;
     display: none;
     
     @media (max-width: 768px) {
+        position: fixed;
         display: flex;
-        position: relative;
+        width: 98vw;
+        height: 10vh;
         flex-flow: row;
-        align-items: center;
         justify-content: space-around;
+        bottom: 0;
+        background-color: #FFFFFF;
     }
 `;
 
-const ColorButton = muiStyled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(purple[500]),
-    backgroundColor: purple[500],
-    '&:hover': {
-        backgroundColor: purple[700],
-    },
-}));
+
