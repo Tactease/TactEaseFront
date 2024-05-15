@@ -8,7 +8,7 @@ const CalenderPage = () => {
     const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
     return (
         <CalenderLayout>
-            <PageTitle title="Weekly Mission Schedule"/>
+            <PageTitle title="Missions Schedule"/>
             <Calendar/>
             {user && user.pakal === "COMMANDER" ? (
             <Link to="/addMissions">

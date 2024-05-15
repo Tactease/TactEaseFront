@@ -9,7 +9,7 @@ import {Link} from "react-router-dom";
 const Requests = () => {
     const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
 
-    const [pageTitle] = useState(user.pakal !== "COMMANDER" ? "My Requests" : "Soldiers Requests");
+    const [pageTitle] = useState(user.pakal !== "COMMANDER" ? `${user.fullName}'s Requests` : "Soldiers Requests");
 
     return (
         <RequestsContainer>
