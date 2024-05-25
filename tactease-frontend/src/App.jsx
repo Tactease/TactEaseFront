@@ -23,7 +23,7 @@ const App = () => {
             <Header />
             <Routes>
                 <Route path="/login" element={<Login />} />
-                <Route exact path="/" element={user ? <CalenderPage /> : <Navigate to="/login" />} />
+                <Route exact={true} path="/" element={user ? <CalenderPage /> : <Navigate to="/login" />} />
                 <Route path="/addMissions" element={user ? <AddMissions /> : <Navigate to="/login" />} />
                 <Route path="/requests" element={user ? <Requests /> : <Navigate to="/login" />} />
                 <Route path="/newRequest" element={user ? <NewRequest /> : <Navigate to="/login" />} />

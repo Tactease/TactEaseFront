@@ -7,6 +7,7 @@ import RequestMobile from "./RequestMobile.jsx";
 const SoldierRequestsMobile = ({ user }) => {
     const [soldiers, setSoldiers] = useState([]);
     const [selectedSoldier, setSelectedSoldier] = useState(null);
+    console.log("selected soldier", selectedSoldier)
 
     useEffect(() => {
         getSoldierByClassId(user.depClass.classId).then((data) => {
@@ -41,12 +42,14 @@ const SoldierRequestsMobile = ({ user }) => {
     }, []);
 
     const handleSoldierClick = (soldier) => {
-        setSelectedSoldier(soldier);
+        setSelectedSoldier(prevSoldier => (prevSoldier && prevSoldier._id === soldier._id ? null : soldier));
     }
+
+    const filteredSoldiers = soldiers.filter(soldier => soldier.requestStatus === true)
 
     return (
         <AllRequestContainer>
-        {soldiers.map((soldier) => (
+        {filteredSoldiers.map((soldier) => (
             <MobileReqContainer
                 key={soldier._id}
                 user={user}

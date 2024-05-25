@@ -28,7 +28,6 @@ const RequestMobile = ({ user, soldier, reloadData }) => {
 
     }, [reloadRequestsData]);
 
-
     return (
         <AllRequestContainer>
             {requests.map((request) => (

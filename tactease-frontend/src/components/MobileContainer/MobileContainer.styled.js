@@ -37,6 +37,7 @@ export const ButtonTextConatiner = styled.button`
     justify-content: center;
     gap: 7px;
     border: none;
+    cursor: pointer;
     background-color: transparent;
 `
 
@@ -77,3 +78,11 @@ export const StatusSpan = styled.span`
     }};
     font-weight: 500;
 `;
+
+export const RequestsCon = styled.div`
+    position: relative;
+    top: 5px;
+    right: 30px;
+    
+`;
+
