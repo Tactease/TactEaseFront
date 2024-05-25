@@ -7,7 +7,6 @@ import RequestMobile from "./RequestMobile.jsx";
 const SoldierRequestsMobile = ({ user }) => {
     const [soldiers, setSoldiers] = useState([]);
     const [selectedSoldier, setSelectedSoldier] = useState(null);
-    console.log("selected soldier", selectedSoldier)
 
     useEffect(() => {
         getSoldierByClassId(user.depClass.classId).then((data) => {

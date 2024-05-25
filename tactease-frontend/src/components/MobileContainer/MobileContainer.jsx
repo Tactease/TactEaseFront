@@ -2,8 +2,10 @@ import { MobileContainer, Line, TextContainer, BoldedText, StatusSpan, PendingRe
 import ApproveRequestForm from "../RequestDataGrid/ApproveRequestForm.jsx";
 import RequestMobile from "../MobileRequestGrids/RequestMobile.jsx";
 import {useState} from "react";
+// import { CSSTransition } from 'react-transition-group';
+// import "./transition.css"
 
-const MobileReqContainer = ({ user, soldier, request, reqId, reloadData, onClick, display }) => {
+const MobileReqContainer = ({ user, soldier, request, reqId, reloadData, onClick }) => {
     const [showRequests, setShowRequests] = useState(false)
     const handleButtonClick = () => {
         setShowRequests(prevState => !prevState);
@@ -31,11 +33,13 @@ const MobileReqContainer = ({ user, soldier, request, reqId, reloadData, onClick
                     <p><BoldedText>Personal Number:</BoldedText> {soldier.personalNumber}</p>
                     <p><BoldedText>Name:</BoldedText> {soldier.fullName}</p>
                     <p><BoldedText>Pakal:</BoldedText> {soldier.pakal}</p>
-                    <p><BoldedText>Pending Requests:</BoldedText> <PendingRequests status={soldier.requestStatus.toString()}> {soldier.requestStatus === true ? "Pending requests" : "No requests to approve"} </PendingRequests> </p>
+                    {showRequests ? null :
+                        ( <p><BoldedText>Pending Requests:</BoldedText> <PendingRequests status={soldier.requestStatus.toString()}> {soldier.requestStatus === true ? "Pending requests" : "No requests to approve"} </PendingRequests> </p>
+                        )}
                 {showRequests && (
-                    <RequestsCon>
-                        <RequestMobile user={user} soldier={soldier} />
-                    </RequestsCon>
+                        <RequestsCon>
+                            <RequestMobile user={user} soldier={soldier} />
+                        </RequestsCon>
                 )}
                 </ButtonTextConatiner>
             )}

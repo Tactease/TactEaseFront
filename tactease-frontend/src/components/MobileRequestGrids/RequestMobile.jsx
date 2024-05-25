@@ -3,6 +3,7 @@ import { getRequestsOfSoldier } from "../../API/requests.api.js";
 import { formatMissionType } from "../Request/Request.jsx";
 import MobileReqContainer from "../MobileContainer/MobileContainer.jsx";
 import { AllRequestContainer } from "../MobileContainer/MobileContainer.styled.js";
+import "../MobileContainer/transition.css"
 
 const RequestMobile = ({ user, soldier, reloadData }) => {
     const [requests, setRequests] = useState([]);
