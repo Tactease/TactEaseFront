@@ -72,7 +72,7 @@ const NewRequest = () => {
         await createRequest(userId,requestData)
             .then((res => {
                 console.log("new request added", res);
-                navigate('/myRequests');}))
+                navigate('/requests');}))
             .catch((err) => console.log(err))
     }
     return (
