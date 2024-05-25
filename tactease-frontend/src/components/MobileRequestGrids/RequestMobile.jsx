@@ -7,7 +7,6 @@ import { AllRequestContainer } from "../MobileContainer/MobileContainer.styled.j
 const RequestMobile = ({ user, soldier, reloadData }) => {
     const [requests, setRequests] = useState([]);
     const [reloadRequestsData, setReloadRequestsData] = useState(true);
-    const [setDisplay, setSetDisplay] = useState(true);
 
     useEffect(() => {
         getRequestsOfSoldier(soldier._id.toString()).then((data) => {
@@ -33,7 +32,7 @@ const RequestMobile = ({ user, soldier, reloadData }) => {
     return (
         <AllRequestContainer>
             {requests.map((request) => (
-                <MobileReqContainer key={request.id} reqId={request.id} user={user} soldier={soldier} request={request} reloadData={reloadRequestsData} setDisplay={setDisplay} />
+                <MobileReqContainer key={request.id} reqId={request.id} user={user} soldier={soldier} request={request} reloadData={reloadRequestsData}  />
             ))}
         </AllRequestContainer>
     );

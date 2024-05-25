@@ -7,7 +7,6 @@ export const MobileContainer = styled.div`
     width: 90vw;   
     background-color: #FAFAFA; 
     border-radius: 5px;
-    display: ${props => props.display ? 'flex' : 'none'};
 `;
 export const Line = styled.svg`
     opacity: 0.3;

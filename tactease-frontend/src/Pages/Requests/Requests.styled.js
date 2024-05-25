@@ -15,7 +15,7 @@ export const RequestsDataGrid = styled.div`
     flex-direction: column;
     align-items: center;
 
-    @media (max-width: 521px) {
+    @media (max-width: 768px) {
         display: none;
     }
 `;
@@ -23,7 +23,7 @@ export const RequestsDataGrid = styled.div`
 export const RequestsDataGridMobile = styled.div`
     display: none;
 
-    @media (max-width: 521px) {
+    @media (max-width: 768px) {
         display: flex;
         flex-direction: column;
         align-items: center;
