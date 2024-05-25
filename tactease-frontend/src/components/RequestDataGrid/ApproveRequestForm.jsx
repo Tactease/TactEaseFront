@@ -18,8 +18,14 @@ const ApproveRequestForm = ({ soldier, reqId, reloadData, reloadDataGrid}) => {
             }
         }
         request.status = status;
+
+        const data = {
+            soldierId: soldier._id.toString(),
+            reqId: reqId,
+            request: request
+        }
         
-        const res = await updateRequest(soldier._id.toString(), reqId, request);
+        const res = await updateRequest(data);
         if (res.status === 200) {
             reloadDataGrid();
             reloadData();

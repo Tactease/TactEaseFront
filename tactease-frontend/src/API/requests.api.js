@@ -16,8 +16,8 @@ export const createRequest = async (soldierId,request) => {
     return await axios.post(`${renderURL}/soldiers/${soldierId}/requests`, request);
 }
 
-export const updateRequest = async (soldierId,requestId,request) => {
-    return await axios.put(`${renderURL}/soldiers/${soldierId}/requests/${requestId}`, request);
+export const updateRequest = async (data) => {
+    return await axios.put(`${renderURL}/soldiers/${data.soldierId}/requests/${data.reqId}`, data);
 }
 
 export const deleteRequest = async (soldierId, requestId) => {
